@@ -1,6 +1,6 @@
 import { Quote, Flag, Users, Sprout } from 'lucide-react'
 import { founder, googleRating } from '../config/research'
-import { Reveal, SectionHeading } from './ui'
+import { Reveal, SectionHeading, SmartImage } from './ui'
 
 const facts = [
   { icon: Flag, label: 'Founded', value: `${founder.established}, Samastipur` },
@@ -13,33 +13,38 @@ export default function Founder() {
     <section id="founder" className="section relative overflow-hidden bg-pitch-900" aria-labelledby="founder-title">
       <div className="pointer-events-none absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
       <div className="container-x relative grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
-        {/* Typographic panel (no photos) — pitch markings drawn in CSS/SVG lines */}
-        <Reveal className="lg:sticky lg:top-28">
-          <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pitch-600 via-pitch-700 to-pitch-900 p-8 shadow-2xl shadow-accent/10 sm:p-10">
-            <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <g fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent/[0.10]">
-                <rect x="20" y="20" width="360" height="440" rx="4" />
-                <line x1="20" y1="240" x2="380" y2="240" />
-                <circle cx="200" cy="240" r="62" />
-                <rect x="110" y="20" width="180" height="80" />
-                <rect x="110" y="380" width="180" height="80" />
-              </g>
-            </svg>
+        {/* Founder card: portrait on top, academy facts below */}
+        <Reveal className="mx-auto w-full max-w-md lg:sticky lg:top-28 lg:max-w-none">
+          <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pitch-600 via-pitch-700 to-pitch-900 shadow-2xl shadow-black/30">
+            {/* Portrait */}
             <div className="relative">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">The academy</p>
-              <p className="mt-3 font-display text-7xl font-extrabold leading-[0.85] text-accent sm:text-8xl">
-                EST.
-                <br />
-                {founder.established}
-              </p>
-              <p className="mt-4 text-base font-semibold text-ink">S.O.S Warriors · Samastipur</p>
-              <div className="my-8 h-px bg-gradient-to-r from-accent/60 via-line to-transparent" aria-hidden="true" />
-              <div className="flex items-end gap-4">
-                <p className="font-display text-6xl font-extrabold leading-none">
+              <SmartImage
+                file="founder-ranjan"
+                alt="Ranjan Gandhi, founder and coach of School of Soccer, Samastipur"
+                sizes="(min-width:1024px) 40vw, 448px"
+                className="aspect-square w-full object-[50%_18%]"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-pitch-800 via-pitch-800/5 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <span className="inline-block rounded-full bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-pitch-950">Founder &amp; Coach</span>
+                <p className="mt-2 font-display text-3xl font-extrabold uppercase leading-none text-ink drop-shadow">{founder.name}</p>
+              </div>
+            </div>
+
+            {/* Academy facts */}
+            <div className="relative grid grid-cols-2 divide-x divide-line border-t border-line">
+              <div className="p-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">The academy</p>
+                <p className="mt-1 font-display text-4xl font-extrabold leading-none text-accent sm:text-5xl">EST. {founder.established}</p>
+                <p className="mt-1.5 text-xs text-muted">S.O.S Warriors · Samastipur</p>
+              </div>
+              <div className="p-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">Google rating</p>
+                <p className="mt-1 font-display text-4xl font-extrabold leading-none sm:text-5xl">
                   {googleRating.rating}
                   <span className="text-accent">★</span>
                 </p>
-                <p className="pb-1.5 text-sm text-muted">{googleRating.count} Google reviews</p>
+                <p className="mt-1.5 text-xs text-muted">{googleRating.count} Google reviews</p>
               </div>
             </div>
           </div>
