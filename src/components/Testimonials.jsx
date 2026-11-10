@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import { Star, ExternalLink } from 'lucide-react'
 import { googleRating, reviews } from '../config/research'
 import { site } from '../config/site'
@@ -23,6 +24,23 @@ const Stars = () => (
 )
 
 export default function Testimonials() {
+  const trackRef = useRef(null)
+  const [active, setActive] = useState(0)
+
+  // Which card is showing in the phone swipe row
+  const onTrackScroll = () => {
+    const el = trackRef.current
+    const card = el?.firstElementChild
+    if (!el || !card) return
+    const step = card.getBoundingClientRect().width + 16 // card + gap-4
+    setActive(Math.min(reviews.length - 1, Math.round(el.scrollLeft / step)))
+  }
+  const goTo = (i) => {
+    const el = trackRef.current
+    const card = el?.children[i]
+    if (el && card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft - 16, behavior: 'smooth' })
+  }
+
   return (
     <section id="testimonials" className="section relative bg-pitch-900" aria-labelledby="testimonials-title">
       <div className="container-x">
@@ -47,13 +65,19 @@ export default function Testimonials() {
           </Reveal>
         </div>
 
-        <div className="mt-12 columns-1 gap-5 md:columns-2 lg:columns-3">
+        {/* Phones: swipeable row (one card per screen, next card peeking). Tablet/desktop: masonry grid. */}
+        <div
+          ref={trackRef}
+          onScroll={onTrackScroll}
+          className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 [scrollbar-width:none] md:mx-0 md:mt-12 md:block md:columns-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:columns-3 [&::-webkit-scrollbar]:hidden"
+          aria-label="Google reviews — swipe to see more"
+        >
           {reviews.map((r, i) => (
             <Reveal
               key={r.name}
               as="figure"
               delay={(i % 3) * 80}
-              className={`mb-5 break-inside-avoid rounded-3xl border p-6 shadow-xl shadow-accent/10 ${
+              className={`w-[85%] shrink-0 snap-start rounded-3xl border p-6 shadow-xl shadow-accent/10 md:mb-5 md:w-auto md:break-inside-avoid ${
                 r.featured ? 'border-accent/40 bg-gradient-to-br from-pitch-600/70 to-pitch-800' : 'border-line bg-pitch-800'
               }`}
             >
@@ -75,6 +99,24 @@ export default function Testimonials() {
             </Reveal>
           ))}
         </div>
+
+        {/* Phone-only: position dots + swipe hint */}
+        <div className="mt-5 flex items-center justify-center gap-3 md:hidden">
+          <div className="flex items-center gap-1.5">
+            {reviews.map((r, i) => (
+              <button
+                key={r.name}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Show review ${i + 1} of ${reviews.length}`}
+                aria-current={i === active}
+                className={`h-2 rounded-full transition-all duration-300 ${i === active ? 'w-6 bg-accent' : 'w-2 bg-line'}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-muted">Swipe →</span>
+        </div>
+
         <p className="mt-4 text-center text-xs text-muted/80">
           Reviews are quoted as written on Google. Some are shortened (marked …).
         </p>

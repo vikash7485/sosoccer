@@ -1,7 +1,34 @@
 import { useEffect, useRef, useState } from 'react'
 import { ImagePlus } from 'lucide-react'
 
-/** Fades children in when they scroll into view. */
+/* Safety net for Reveal: one shared scroll check that shows any block whose top has
+   reached the screen, even if IntersectionObserver missed it (fast flick-scrolls,
+   menu jumps, in-app browsers like Instagram/WhatsApp). */
+const pending = new Map() // element -> show()
+let ticking = false
+function checkPending() {
+  ticking = false
+  const limit = window.innerHeight * 0.95
+  pending.forEach((show, el) => {
+    if (el.getBoundingClientRect().top < limit) {
+      show()
+      pending.delete(el)
+    }
+  })
+}
+function onScrollCheck() {
+  if (!ticking) {
+    ticking = true
+    requestAnimationFrame(checkPending)
+  }
+}
+if (typeof window !== 'undefined') {
+  window.addEventListener('scroll', onScrollCheck, { passive: true })
+  window.addEventListener('resize', onScrollCheck, { passive: true })
+  window.addEventListener('load', onScrollCheck)
+}
+
+/** Fades children in when they scroll into view — content can never get stuck hidden. */
 export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -9,17 +36,31 @@ export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, .
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const show = () => setVisible(true)
+
+    // Already on screen (or scrolled past) when the page loads → show straight away
+    if (!('IntersectionObserver' in window) || el.getBoundingClientRect().top < window.innerHeight) {
+      show()
+      return
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
+        // any pixel visible, or the block is already above the screen
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+          show()
+          pending.delete(el)
           io.disconnect()
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+      { threshold: 0, rootMargin: '0px 0px -6% 0px' },
     )
     io.observe(el)
-    return () => io.disconnect()
+    pending.set(el, show)
+    return () => {
+      io.disconnect()
+      pending.delete(el)
+    }
   }, [])
 
   return (

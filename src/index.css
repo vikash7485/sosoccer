@@ -82,6 +82,9 @@
   opacity: 1;
   transform: none;
 }
+@media (max-width: 767px) {       /* phones: smaller, quicker fade so nothing feels "missing" */
+  .reveal { transform: translateY(14px); transition-duration: 0.5s; }
+}
 
 /* Hero field-line + ball animations */
 @keyframes draw {

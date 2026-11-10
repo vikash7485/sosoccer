@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Phone, ArrowRight, ChevronDown } from 'lucide-react'
+import { Phone, ArrowRight, Clock, MapPin } from 'lucide-react'
 import { externalLink, site, whatsappLink } from '../config/site'
 import { WhatsAppIcon } from './ui'
 
@@ -87,47 +87,62 @@ function FieldGraphics() {
 export default function Hero() {
   return (
     <section id="home" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
-      {/* Background video */}
+      {/* Background video — lighter overlay so the football action stays visible */}
       <div className="absolute inset-0 -z-10 bg-black">
         <HeroVideo />
-        {/* Dark gradient overlay: black/transparent → dark green */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-pitch-950" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/15 to-transparent" />
         <FieldGraphics />
       </div>
 
-      <div className="container-x flex flex-1 flex-col justify-center text-white pb-16 pt-32 sm:pt-36">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur">
+      {/* Compact headline */}
+      <div className="container-x flex flex-1 flex-col justify-center pb-8 pt-28 text-white sm:pt-32">
+        <div className="max-w-xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-black/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
             Football Academy in Samastipur
           </span>
 
-          <h1 id="hero-title" className="mt-6 text-[3.4rem] font-extrabold uppercase leading-[0.88] sm:text-7xl lg:text-[6.5rem]">
+          <h1 id="hero-title" className="mt-4 text-4xl font-extrabold uppercase leading-[0.95] drop-shadow-lg sm:text-5xl lg:text-6xl">
             Learn. Play.
             <br />
             <span className="bg-gradient-to-r from-accent to-accent-600 bg-clip-text text-transparent">Grow</span> with Football.
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85 drop-shadow sm:text-base">
             Professional football coaching for young players in Samastipur. Build skills, fitness, confidence, and teamwork.
           </p>
+        </div>
+      </div>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={whatsappLink()} {...externalLink} className="btn-primary !px-8 text-base">
-              Join Now <ArrowRight className="h-4 w-4" />
-            </a>
-            <a href={site.phoneHref} className="btn-outline !border-white/80 !text-white !px-8 text-base hover:!bg-white hover:!text-[#0b0b0f]">
-              <Phone className="h-4 w-4" /> Call Us
-            </a>
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp !px-8 text-base">
-              <WhatsAppIcon className="h-5 w-5" /> WhatsApp Us
-            </a>
+      {/* Action bar: admissions heading + timings, with the three buttons */}
+      <div className="container-x relative pb-5 sm:pb-7">
+        <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <p className="font-display text-lg font-extrabold uppercase tracking-wide text-accent sm:text-xl">Admissions Open</p>
+            <div className="mt-1 flex flex-col gap-1 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-x-5">
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                <span><strong className="font-semibold text-white">6:00 AM – 9:00 PM</strong> · all days</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                {site.addressShort}
+              </span>
+            </div>
           </div>
 
-          <p className="mt-6 text-sm text-white/75">
-            Open {site.timings} · {site.addressShort}
-          </p>
+          <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
+            <a href={whatsappLink()} {...externalLink} className="btn-primary !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
+              Join Now <ArrowRight className="hidden h-4 w-4 sm:block" />
+            </a>
+            <a href={site.phoneHref} className="btn-outline !min-h-11 !gap-1.5 !border-white/70 !px-2 whitespace-nowrap text-[13px] !text-white hover:!bg-white hover:!text-[#0b0b0f] sm:!px-6 sm:text-sm">
+              <Phone className="h-4 w-4 shrink-0 max-[380px]:hidden" /> Call Us
+            </a>
+            <a href={whatsappLink()} {...externalLink} className="btn-whatsapp !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
+              <WhatsAppIcon className="h-4 w-4 shrink-0 max-[380px]:hidden" /> <span className="sm:hidden">WhatsApp</span><span className="hidden sm:inline">WhatsApp Us</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -143,9 +158,6 @@ export default function Hero() {
         </ul>
       </div>
 
-      <a href="#about" className="absolute bottom-20 right-6 hidden h-11 w-11 place-items-center rounded-full border border-white/30 text-white/80 transition hover:text-accent md:grid" aria-label="Scroll to About section">
-        <ChevronDown className="h-5 w-5 animate-bounce" />
-      </a>
     </section>
   )
 }
