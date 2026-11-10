@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Inter", ui-sans-serif, sans-serif;
+
+  /* Five-colour scheme: black, gold, yellow, white and royal blue.
+     The root palette below is BLACK + GOLD (header, hero, dark sections, footer).
+     WHITE + BLUE and BLUE + YELLOW sections re-map these same variables further down. */
+  --color-pitch-950: #0b0b0f; /* background (also dark text on gold buttons) */
+  --color-pitch-900: #111116;
+  --color-pitch-800: #17171e; /* cards */
+  --color-pitch-700: #131318;
+  --color-pitch-600: #24242c; /* chips, hover fills */
+  --color-pitch-500: #3a3a46;
+  --color-ink: #fafafa;       /* headings */
+  --color-line: #2a2a33;      /* borders */
+  --color-muted: #b9bcc7;     /* body text */
+  --color-accent: #f5b700;    /* gold */
+  --color-accent-600: #ffd54a; /* yellow */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-600: #1ebe5a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-pitch-950 font-sans text-ink antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .section {
+    @apply py-20 sm:py-28;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent;
+  }
+  .section-title {
+    @apply mt-3 text-4xl font-extrabold uppercase leading-[0.95] sm:text-5xl lg:text-6xl;
+  }
+  .btn, .btn-primary, .btn-outline, .btn-whatsapp {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition duration-200 active:scale-[0.97];
+  }
+  .btn-primary {
+    @apply bg-gradient-to-r from-accent to-accent-600 text-pitch-950 shadow-lg shadow-accent/25 hover:shadow-accent/40 hover:brightness-105;
+  }
+  .btn-outline {
+    @apply border border-accent/70 text-accent hover:bg-accent hover:text-pitch-950;
+  }
+  .btn-whatsapp {
+    @apply bg-whatsapp text-[#0b0b0f] shadow-lg shadow-whatsapp/20 hover:bg-whatsapp-600;
+  }
+  .card {
+    @apply rounded-3xl border border-line bg-pitch-800 shadow-xl shadow-black/20 backdrop-blur-sm;
+  }
+  .field {
+    @apply w-full rounded-2xl border border-line bg-pitch-900/80 px-4 py-3.5 text-base text-ink placeholder:text-muted/60 transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero field-line + ball animations */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+.field-line {
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  animation: draw 3.5s ease-out 0.3s forwards;
+}
+@keyframes roll {
+  0%   { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+.hero-ball {
+  offset-path: path("M -60 620 C 300 460, 600 760, 900 560 S 1400 380, 1700 520");
+  animation: roll 22s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin-slow { animation: spin 3s linear infinite; transform-origin: center; transform-box: fill-box; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color-whatsapp);
+  animation: pulse-ring 2.2s ease-out infinite;
+  z-index: -1;
+}
+
+/* Why-us showcase: soft fade when the selected reason changes */
+@keyframes why-fade {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to   { opacity: 1; transform: none; }
+}
+.why-fade { animation: why-fade 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* Why-us carousel: slow zoom on the active photo + slide timer bar */
+@keyframes why-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+.why-kenburns { animation: why-kenburns 6s ease-out forwards; }
+@keyframes why-progress {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+.why-progress { animation: why-progress linear forwards; }
+
+/* Install-app banner */
+@keyframes install-slide {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.install-slide { animation: install-slide 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .why-fade, .why-kenburns, .why-progress, .install-slide { animation: none; }
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .field-line { animation: none; stroke-dashoffset: 0; }
+  .hero-ball, .spin-slow, .pulse-ring::before { animation: none; }
+}
+
+/* ─── Section moods ───────────────────────────────────────────
+   Each section gets its own soft background, matched to what it shows.
+   Built only from the palette variables, so they follow whichever palette is active. */
+:root {
+  --glow: var(--color-accent);        /* warm glow = accent */
+  --glow-2: var(--color-accent-600);  /* second glow = accent partner */
+  --glow-cool: var(--color-pitch-500);/* cool glow = palette mid-tone */
+}
+#about {
+  background:
+    radial-gradient(55% 60% at 0% 50%, color-mix(in srgb, var(--glow) 7%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-950) 0%, var(--color-pitch-900) 100%);
+}
+#founder {                       /* warm, personal — spotlight on the story */
+  background:
+    radial-gradient(50% 60% at 15% 40%, color-mix(in srgb, var(--glow-2) 12%, transparent), transparent 70%),
+    linear-gradient(160deg, var(--color-pitch-700) 0%, var(--color-pitch-900) 100%);
+}
+#programs {                      /* clean training-ground light */
+  background:
+    radial-gradient(45% 55% at 100% 0%, color-mix(in srgb, var(--glow) 10%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 0% 100%, color-mix(in srgb, var(--glow-cool) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-900) 0%, var(--color-pitch-950) 100%);
+}
+#why {                           /* glow behind the photo carousel */
+  background:
+    radial-gradient(55% 65% at 28% 55%, color-mix(in srgb, var(--glow) 13%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-900) 0%, var(--color-pitch-950) 100%);
+}
+#achievements {                  /* trophy light from above */
+  background:
+    radial-gradient(60% 40% at 50% 0%, color-mix(in srgb, var(--glow-2) 14%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-950) 0%, var(--color-pitch-900) 100%);
+}
+#gallery {                       /* plain white — lets the photos carry the colour */
+  background: var(--color-pitch-950);
+}
+#testimonials {
+  background:
+    radial-gradient(50% 55% at 100% 0%, color-mix(in srgb, var(--glow-cool) 25%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-900) 0%, var(--color-pitch-950) 100%);
+}
+#join {                          /* call-to-action warmth */
+  background:
+    radial-gradient(45% 60% at 100% 25%, color-mix(in srgb, var(--glow) 14%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-950) 0%, var(--color-pitch-900) 100%);
+}
+#contact {
+  background:
+    radial-gradient(50% 55% at 100% 100%, color-mix(in srgb, var(--glow-cool) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-pitch-900) 0%, var(--color-pitch-950) 100%);
+}
+footer.bg-pitch-950 {
+  background: linear-gradient(180deg, var(--color-pitch-900) 0%, var(--color-pitch-700) 100%);
+}
+
+
+/* ─── Section colour styles ───────────────────────────────────
+   Each section re-maps the palette variables, so every button, card,
+   icon and text colour inside it switches automatically. */
+
+/* WHITE + BLUE */
+#about, #why, #gallery, #join {
+  --color-pitch-950: #ffffff; --color-pitch-900: #f5f8ff; --color-pitch-800: #ffffff;
+  --color-pitch-700: #eef3ff; --color-pitch-600: #e0e9ff; --color-pitch-500: #93b4ff;
+  --color-ink: #0b1220; --color-line: #dfe6f3; --color-muted: #4b5563;
+  --color-accent: #1d4ed8; --color-accent-600: #2563eb;
+  color: var(--color-ink);
+}
+
+/* BLUE + YELLOW */
+#programs, #testimonials {
+  --color-pitch-950: #0a2472; --color-pitch-900: #0e2f8f; --color-pitch-800: #123a9e;
+  --color-pitch-700: #0d2c86; --color-pitch-600: #1f4bc0; --color-pitch-500: #4f7cff;
+  --color-ink: #ffffff; --color-line: #2c56c9; --color-muted: #d6e0ff;
+  --color-accent: #ffd60a; --color-accent-600: #f5b700;
+  color: var(--color-ink);
+}
+
+/* BLACK + GOLD sections (#founder, #achievements, #contact) use the root palette. */

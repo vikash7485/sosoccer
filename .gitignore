@@ -1,0 +1,17 @@
+# dependencies & build output
+node_modules
+dist
+
+# local tool settings
+.claude
+.vercel
+
+# original, uncompressed media (the site uses the compressed copies in /public)
+raw-video
+raw-images/*
+!raw-images/.gitkeep
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
