@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Download, Share, PlusSquare, X, MoreVertical } from 'lucide-react'
+import { useLang } from '../i18n'
 
 const DISMISS_KEY = 'sos-install-dismissed'
 const DISMISS_DAYS = 7
@@ -94,6 +95,7 @@ export default function InstallApp() {
     if (outcome !== 'accepted') dismiss()
   }
 
+  const { t } = useLang()
   if (!open || !mode) return null
 
   return (
@@ -102,25 +104,25 @@ export default function InstallApp() {
       aria-labelledby="install-title"
       className="install-slide fixed bottom-4 left-4 right-24 z-40 max-w-sm rounded-2xl border border-line bg-pitch-800/95 p-4 shadow-2xl shadow-black/50 backdrop-blur-md sm:bottom-7 sm:left-7 sm:right-auto sm:p-5"
     >
-      <button type="button" onClick={dismiss} className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full text-muted transition hover:bg-pitch-600 hover:text-ink" aria-label="Close">
+      <button type="button" onClick={dismiss} className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full text-muted transition hover:bg-pitch-600 hover:text-ink" aria-label={t('Close', 'बंद करें')}>
         <X className="h-4 w-4" />
       </button>
 
       <div className="flex items-center gap-3 pr-6">
         <img src="/icons/icon-192.png" alt="" width="48" height="48" className="h-12 w-12 shrink-0 rounded-xl" />
         <div>
-          <p id="install-title" className="font-display text-xl font-extrabold uppercase leading-tight">Get the app</p>
-          <p className="text-xs text-muted">School of Soccer on your home screen — opens in one tap.</p>
+          <p id="install-title" className="font-display text-xl font-extrabold uppercase leading-tight">{t('Get the app', 'ऐप पाएँ')}</p>
+          <p className="text-xs text-muted">{t('School of Soccer on your home screen — opens in one tap.', 'स्कूल ऑफ सॉकर आपकी होम स्क्रीन पर — एक टैप में खुलेगा।')}</p>
         </div>
       </div>
 
       {mode === 'prompt' && (
         <div className="mt-4 flex gap-2">
           <button type="button" onClick={install} className="btn-primary !min-h-11 flex-1">
-            <Download className="h-4 w-4" aria-hidden="true" /> Install App
+            <Download className="h-4 w-4" aria-hidden="true" /> {t('Install App', 'ऐप इंस्टॉल करें')}
           </button>
           <button type="button" onClick={dismiss} className="rounded-full px-4 text-sm font-semibold text-muted transition hover:text-ink">
-            Not now
+            {t('Not now', 'अभी नहीं')}
           </button>
         </div>
       )}
@@ -129,11 +131,11 @@ export default function InstallApp() {
         <ol className="mt-4 grid gap-2 text-sm text-ink">
           <li className="flex items-center gap-2.5 rounded-xl bg-pitch-600/60 px-3 py-2">
             <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent text-xs font-bold text-pitch-950">1</span>
-            Tap <Share className="h-4 w-4 text-accent" aria-label="Share" /> <strong>Share</strong> in Safari
+            {t('Tap', 'Safari में')} <Share className="h-4 w-4 text-accent" aria-label="Share" /> <strong>Share</strong> {t('in Safari', 'दबाएँ')}
           </li>
           <li className="flex items-center gap-2.5 rounded-xl bg-pitch-600/60 px-3 py-2">
             <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent text-xs font-bold text-pitch-950">2</span>
-            Choose <PlusSquare className="h-4 w-4 text-accent" aria-hidden="true" /> <strong>Add to Home Screen</strong>
+            {t('Choose', 'चुनें')} <PlusSquare className="h-4 w-4 text-accent" aria-hidden="true" /> <strong>Add to Home Screen</strong>
           </li>
         </ol>
       )}
@@ -142,7 +144,7 @@ export default function InstallApp() {
         <p className="mt-4 flex items-start gap-2 rounded-xl bg-pitch-600/60 px-3 py-2.5 text-sm text-ink">
           <MoreVertical className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
           <span>
-            Open your browser menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.
+            {t('Open your browser menu and choose', 'ब्राउज़र का मेनू खोलें और चुनें')} <strong>Install app</strong> {t('or', 'या')} <strong>Add to Home screen</strong>.
           </span>
         </p>
       )}

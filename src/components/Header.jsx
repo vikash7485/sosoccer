@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Menu, X, Phone } from 'lucide-react'
 import { externalLink, navLinks, site, whatsappLink } from '../config/site'
 import { Logo, WhatsAppIcon } from './ui'
+import { LangToggle, useLang } from '../i18n'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { t, f } = useLang()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -27,28 +29,29 @@ export default function Header() {
         scrolled ? 'border-b border-line bg-pitch-950/85 py-2 shadow-lg shadow-black/40 backdrop-blur-xl' : 'py-4'
       }`}
     >
-      <div className="container-x flex items-center justify-between gap-4">
-        <Logo />
+      <div className="container-x flex items-center justify-between gap-2 sm:gap-4">
+        <Logo compact />
 
         <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {navLinks.map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="relative rounded-full px-3 py-2 text-sm font-medium text-muted transition hover:text-accent after:absolute after:inset-x-3 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100">
-                  {l.label}
+                  {f(l, 'label')}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a href={whatsappLink()} {...externalLink} className="btn-primary hidden !min-h-11 sm:inline-flex">Join Now</a>
+        <div className="flex shrink-0 items-center gap-2">
+          <LangToggle />
+          <a href={whatsappLink()} {...externalLink} className="btn-primary hidden !min-h-11 sm:inline-flex">{t('Join Now', 'अभी जुड़ें')}</a>
           <button
             type="button"
             onClick={() => setOpen(true)}
             className="grid h-11 w-11 place-items-center rounded-full border border-line bg-pitch-600 xl:hidden"
-            aria-label="Open menu"
+            aria-label={t('Open menu', 'मेनू खोलें')}
             aria-expanded={open}
             aria-controls="mobile-nav"
           >
@@ -73,7 +76,7 @@ export default function Header() {
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <Logo />
-          <button type="button" onClick={() => setOpen(false)} className="grid h-11 w-11 place-items-center rounded-full bg-pitch-600" aria-label="Close menu">
+          <button type="button" onClick={() => setOpen(false)} className="grid h-11 w-11 place-items-center rounded-full bg-pitch-600" aria-label={t('Close menu', 'मेनू बंद करें')}>
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -86,7 +89,7 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-2xl font-bold uppercase tracking-wide text-ink transition hover:bg-pitch-600 hover:text-accent"
                 >
-                  {l.label}
+                  {f(l, 'label')}
                   <span className="text-xs font-sans font-medium text-accent/60">0{i + 1}</span>
                 </a>
               </li>
@@ -94,9 +97,9 @@ export default function Header() {
           </ul>
         </nav>
         <div className="grid gap-3 border-t border-line p-5">
-          <a href={whatsappLink()} {...externalLink} onClick={() => setOpen(false)} className="btn-primary w-full">Join Now</a>
+          <a href={whatsappLink()} {...externalLink} onClick={() => setOpen(false)} className="btn-primary w-full">{t('Join Now', 'अभी जुड़ें')}</a>
           <div className="grid grid-cols-2 gap-3">
-            <a href={site.phoneHref} className="btn-outline"><Phone className="h-4 w-4" /> Call</a>
+            <a href={site.phoneHref} className="btn-outline"><Phone className="h-4 w-4" /> {t('Call', 'कॉल करें')}</a>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp"><WhatsAppIcon className="h-4 w-4" /> WhatsApp</a>
           </div>
         </div>

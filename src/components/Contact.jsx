@@ -1,11 +1,13 @@
 import { MapPin, Clock, Phone, Navigation, Send } from 'lucide-react'
 import { externalLink, site, whatsappLink } from '../config/site'
 import { FacebookIcon, InstagramIcon, Reveal, SectionHeading, WhatsAppIcon } from './ui'
+import { useLang } from '../i18n'
 
 export default function Contact() {
+  const { t, f } = useLang()
   const actions = [
-    { label: 'Call Now', href: site.phoneHref, icon: Phone, cls: 'btn-primary' },
-    { label: 'WhatsApp Enquiry', href: whatsappLink(), icon: WhatsAppIcon, cls: 'btn-whatsapp', ext: true },
+    { label: t('Call Now', 'अभी कॉल करें'), href: site.phoneHref, icon: Phone, cls: 'btn-primary' },
+    { label: t('WhatsApp Enquiry', 'व्हाट्सऐप पूछताछ'), href: whatsappLink(), icon: WhatsAppIcon, cls: 'btn-whatsapp', ext: true },
     { label: 'Instagram', href: site.instagram, icon: InstagramIcon, cls: 'btn-outline', ext: true },
     { label: 'Facebook', href: site.facebook, icon: FacebookIcon, cls: 'btn-outline', ext: true },
   ]
@@ -13,28 +15,28 @@ export default function Contact() {
   return (
     <section id="contact" className="section bg-pitch-900" aria-labelledby="contact-title">
       <div className="container-x">
-        <SectionHeading center eyebrow="Location" title={<span id="contact-title">Visit Our Academy</span>} />
+        <SectionHeading center eyebrow={t('Location', 'लोकेशन')} title={<span id="contact-title">{t('Visit Our Academy', 'हमारी अकादमी आइए')}</span>} />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-5">
           <Reveal as="address" variant="left" className="card flex flex-col p-7 not-italic sm:p-9 lg:col-span-2">
             <div className="flex gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent/15 text-accent"><MapPin className="h-6 w-6" aria-hidden="true" /></span>
               <div>
-                <h3 className="text-xl font-bold uppercase text-ink">Address</h3>
-                <p className="mt-1 text-muted">{site.address}</p>
+                <h3 className="text-xl font-bold uppercase text-ink">{t('Address', 'पता')}</h3>
+                <p className="mt-1 text-muted">{f(site, 'address')}</p>
               </div>
             </div>
             <div className="mt-6 flex gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent/15 text-accent"><Clock className="h-6 w-6" aria-hidden="true" /></span>
               <div>
-                <h3 className="text-xl font-bold uppercase text-ink">Timings</h3>
-                <p className="mt-1 text-muted">{site.timings}</p>
+                <h3 className="text-xl font-bold uppercase text-ink">{t('Timings', 'समय')}</h3>
+                <p className="mt-1 text-muted">{f(site, 'timings')}</p>
               </div>
             </div>
             <div className="mt-6 flex gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent/15 text-accent"><Phone className="h-6 w-6" aria-hidden="true" /></span>
               <div>
-                <h3 className="text-xl font-bold uppercase text-ink">Phone / WhatsApp</h3>
+                <h3 className="text-xl font-bold uppercase text-ink">{t('Phone / WhatsApp', 'फ़ोन / व्हाट्सऐप')}</h3>
                 <a href={site.phoneHref} className="mt-1 block text-muted hover:text-accent">{site.phoneDisplay}</a>
               </div>
             </div>
@@ -47,7 +49,7 @@ export default function Contact() {
               ))}
             </div>
             <a href="#join" className="mt-4 inline-flex items-center gap-1.5 self-center text-sm font-semibold text-accent underline-offset-4 hover:underline">
-              <Send className="h-4 w-4" aria-hidden="true" /> Prefer a form? Fill the enquiry form
+              <Send className="h-4 w-4" aria-hidden="true" /> {t('Prefer a form? Fill the enquiry form', 'फ़ॉर्म भरना चाहते हैं? पूछताछ फ़ॉर्म भरें')}
             </a>
           </Reveal>
 
@@ -60,7 +62,7 @@ export default function Contact() {
               referrerPolicy="no-referrer-when-downgrade"
             />
             <a href={site.googleMaps} target="_blank" rel="noopener noreferrer" className="btn-primary absolute bottom-5 left-5 right-5 sm:left-auto">
-              <Navigation className="h-4 w-4" /> Open in Google Maps
+              <Navigation className="h-4 w-4" /> {t('Open in Google Maps', 'गूगल मैप्स में खोलें')}
             </a>
           </Reveal>
         </div>

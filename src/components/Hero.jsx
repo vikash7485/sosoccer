@@ -2,6 +2,57 @@ import { useEffect, useRef, useState } from 'react'
 import { Phone, ArrowRight, Clock, MapPin } from 'lucide-react'
 import { externalLink, site, whatsappLink } from '../config/site'
 import { WhatsAppIcon } from './ui'
+import { useLang } from '../i18n'
+
+/** Current hour/minute in India, whatever time zone the visitor's phone is set to. */
+function indiaNow() {
+  const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date())
+  const get = (type) => Number(parts.find((x) => x.type === type)?.value)
+  return get('hour') * 60 + get('minute')
+}
+
+/** Live badge: "Open now · closes 9 PM (2h 15m left)" / "Opens tomorrow at 6 AM" */
+function OpenNowBadge() {
+  const { t } = useLang()
+  const [mins, setMins] = useState(indiaNow)
+  useEffect(() => {
+    const id = setInterval(() => setMins(indiaNow()), 30000)
+    return () => clearInterval(id)
+  }, [])
+
+  const open = site.openHour * 60
+  const close = site.closeHour * 60
+  const isOpen = mins >= open && mins < close
+  let text
+  if (isOpen) {
+    const left = close - mins
+    const h = Math.floor(left / 60)
+    const m = left % 60
+    const leftEn = h ? `${h}h ${m}m` : `${m}m`
+    const leftHi = h ? `${h} घं ${m} मि` : `${m} मि`
+    text = t(`Open now · closes 9 PM (${leftEn} left)`, `अभी खुला है · रात 9 बजे बंद (${leftHi} बाकी)`)
+  } else if (mins < open) {
+    text = t('Closed now · opens today at 6 AM', 'अभी बंद · आज सुबह 6 बजे खुलेगा')
+  } else {
+    text = t('Closed now · opens tomorrow at 6 AM', 'अभी बंद · कल सुबह 6 बजे खुलेगा')
+  }
+
+  return (
+    <span
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${
+        isOpen ? 'border-emerald-400/40 bg-emerald-500/15 text-emerald-300' : 'border-red-400/40 bg-red-500/15 text-red-300'
+      }`}
+      role="status"
+      aria-live="polite"
+    >
+      <span className="relative flex h-2 w-2" aria-hidden="true">
+        {isOpen && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />}
+        <span className={`relative inline-flex h-2 w-2 rounded-full ${isOpen ? 'bg-emerald-400' : 'bg-red-400'}`} />
+      </span>
+      {text}
+    </span>
+  )
+}
 
 /**
  * Background video — floodlit stadium match (13 s), free stock footage from Pexels
@@ -55,6 +106,7 @@ function HeroVideo() {
 }
 
 const trust = ['Football Coaching', 'Fitness Training', 'Kids & Youth Batches', 'Samastipur']
+const trustHi = ['फुटबॉल कोचिंग', 'फिटनेस ट्रेनिंग', 'बच्चों व युवाओं के बैच', 'समस्तीपुर']
 
 function FieldGraphics() {
   return (
@@ -86,6 +138,8 @@ function FieldGraphics() {
 }
 
 export default function Hero() {
+  const { t, f, lang } = useLang()
+  const trustList = lang === 'hi' ? trustHi : trust
   return (
     <section id="home" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
       {/* Background video — lighter overlay so the football action stays visible */}
@@ -104,22 +158,22 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
             </span>
-            Football Academy in Samastipur
+            {t('Football Academy in Samastipur', 'समस्तीपुर की फुटबॉल अकादमी')}
           </span>
 
           {/* Headline lines rise in one after another */}
           <h1 id="hero-title" className="mt-4 text-4xl font-extrabold uppercase leading-[0.95] drop-shadow-lg sm:text-5xl lg:text-6xl">
-            <span className="hero-in inline-block" style={{ animationDelay: '0.25s' }}>Learn.</span>{' '}
-            <span className="hero-in inline-block" style={{ animationDelay: '0.4s' }}>Play.</span>
+            <span className="hero-in inline-block" style={{ animationDelay: '0.25s' }}>{t('Learn.', 'सीखो।')}</span>{' '}
+            <span className="hero-in inline-block" style={{ animationDelay: '0.4s' }}>{t('Play.', 'खेलो।')}</span>
             <br />
             <span className="hero-in inline-block" style={{ animationDelay: '0.55s' }}>
-              <span className="text-shimmer bg-gradient-to-r from-accent via-[#fff3b0] to-accent bg-clip-text text-transparent">Grow</span>
+              <span className="text-shimmer bg-gradient-to-r from-accent via-[#fff3b0] to-accent bg-clip-text text-transparent">{t('Grow', 'आगे बढ़ो')}</span>
             </span>{' '}
-            <span className="hero-in inline-block" style={{ animationDelay: '0.7s' }}>with Football.</span>
+            <span className="hero-in inline-block" style={{ animationDelay: '0.7s' }}>{t('with Football.', 'फुटबॉल के साथ।')}</span>
           </h1>
 
           <p className="hero-in mt-3 max-w-md text-sm leading-relaxed text-white/85 drop-shadow sm:text-base" style={{ animationDelay: '0.9s' }}>
-            Professional football coaching for young players in Samastipur. Build skills, fitness, confidence, and teamwork.
+            {t('Professional football coaching for young players in Samastipur. Build skills, fitness, confidence, and teamwork.', 'समस्तीपुर में युवा खिलाड़ियों के लिए प्रोफेशनल फुटबॉल कोचिंग। स्किल, फिटनेस, आत्मविश्वास और टीमवर्क बनाइए।')}
           </p>
         </div>
       </div>
@@ -128,41 +182,44 @@ export default function Hero() {
       <div className="container-x relative pb-5 sm:pb-7">
         <div className="hero-in flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5 lg:flex-row lg:items-center lg:justify-between" style={{ animationDelay: '1.1s' }}>
           <div className="min-w-0">
-            <p className="font-display text-lg font-extrabold uppercase tracking-wide text-accent sm:text-xl">Admissions Open</p>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <p className="font-display text-lg font-extrabold uppercase tracking-wide text-accent sm:text-xl">{t('Admissions Open', 'एडमिशन जारी है')}</p>
+              <OpenNowBadge />
+            </div>
             <div className="mt-1 flex flex-col gap-1 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-x-5">
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                <span><strong className="font-semibold text-white">6:00 AM – 9:00 PM</strong> · all days</span>
+                <span><strong className="font-semibold text-white">{t('6:00 AM – 9:00 PM', 'सुबह 6 – रात 9 बजे')}</strong> · {t('all days', 'हर दिन')}</span>
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                {site.addressShort}
+                {f(site, 'addressShort')}
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
             <a href={whatsappLink()} {...externalLink} className="btn-primary shine-loop !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
-              Join Now <ArrowRight className="hidden h-4 w-4 sm:block" />
+              {t('Join Now', 'अभी जुड़ें')} <ArrowRight className="hidden h-4 w-4 sm:block" />
             </a>
             <a href={site.phoneHref} className="btn-outline !min-h-11 !gap-1.5 !border-white/70 !px-2 whitespace-nowrap text-[13px] !text-white hover:!bg-white hover:!text-[#0b0b0f] sm:!px-6 sm:text-sm">
-              <Phone className="h-4 w-4 shrink-0 max-[380px]:hidden" /> Call Us
+              <Phone className="h-4 w-4 shrink-0 max-[380px]:hidden" /> {t('Call Us', 'कॉल करें')}
             </a>
             <a href={whatsappLink()} {...externalLink} className="btn-whatsapp !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
-              <WhatsAppIcon className="h-4 w-4 shrink-0 max-[380px]:hidden" /> <span className="sm:hidden">WhatsApp</span><span className="hidden sm:inline">WhatsApp Us</span>
+              <WhatsAppIcon className="h-4 w-4 shrink-0 max-[380px]:hidden" /> <span className="sm:hidden">WhatsApp</span><span className="hidden sm:inline">{t('WhatsApp Us', 'व्हाट्सऐप करें')}</span>
             </a>
           </div>
         </div>
       </div>
 
       {/* Trust strip — endless scrolling ticker (list repeated twice for a seamless loop) */}
-      <div className="ticker relative overflow-hidden border-y border-line bg-pitch-950/70 backdrop-blur-md" aria-label={trust.join(', ')}>
+      <div className="ticker relative overflow-hidden border-y border-line bg-pitch-950/70 backdrop-blur-md" aria-label={trustList.join(', ')}>
         <div className="ticker-track flex w-max" aria-hidden="true">
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex shrink-0 items-center py-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted sm:text-sm">
-              {[...trust, ...trust].map((t, i) => (
+              {[...trustList, ...trustList].map((item, i) => (
                 <li key={`${copy}-${i}`} className="flex items-center whitespace-nowrap">
-                  <span className="px-6 sm:px-10">{t}</span>
+                  <span className="px-6 sm:px-10">{item}</span>
                   <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
                 </li>
               ))}

@@ -232,11 +232,12 @@ export function WhatsAppIcon(props) {
   )
 }
 
-export function Logo({ className = '' }) {
+/** compact: in the crowded phone header, smaller name and icon-only below 360px */
+export function Logo({ className = '', compact = false }) {
   return (
-    <a href="#home" className={`group flex items-center gap-2.5 ${className}`} aria-label="School of Soccer — home">
-      <img src="/favicon.svg" alt="" width="40" height="40" className="h-10 w-10 transition-transform duration-700 ease-out group-hover:rotate-[360deg] motion-reduce:transition-none" />
-      <span className="whitespace-nowrap font-display text-xl font-extrabold uppercase leading-none tracking-wide">
+    <a href="#home" className={`group flex min-w-0 items-center gap-2.5 ${className}`} aria-label="School of Soccer — home">
+      <img src="/favicon.svg" alt="" width="40" height="40" className="h-10 w-10 shrink-0 transition-transform duration-700 ease-out group-hover:rotate-[360deg] motion-reduce:transition-none" />
+      <span className={`whitespace-nowrap font-display font-extrabold uppercase leading-none tracking-wide ${compact ? 'text-lg max-[359px]:hidden sm:text-xl' : 'text-xl'}`}>
         School <span className="text-accent">of</span> Soccer
       </span>
     </a>

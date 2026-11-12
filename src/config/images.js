@@ -30,13 +30,13 @@ export const aboutImage = {
 
 export const galleryImages = [
   // Real photos from the academy's Facebook page (downloaded 10 Nov 2026)
-  { file: 'fb-sports-day-1', caption: 'Team Spirit', alt: 'School of Soccer players and coaches with footballs at the National Sports Day 2024 celebration', shape: 'square' },
-  { file: 'fb-girls-team', caption: 'Girls’ Team', alt: 'The School of Soccer girls’ team seated in kit on the ground', shape: 'wide' },
-  { file: 'fb-muzaffarpur', caption: 'Match Day', alt: 'School of Soccer number 14 watching the match against Muzaffarpur at Banhara', shape: 'wide' },
-  { file: 'fb-childrens-day', caption: 'Children’s Day Final', alt: 'Three School of Soccer players at the Children’s Day final, 2024', shape: 'wide' },
-  { file: 'fb-gal-bibs', caption: 'Young Warriors', alt: 'Four young School of Soccer players in orange training bibs beside practice cones', shape: 'tall' },
-  { file: 'fb-gal-floodlit', caption: 'Floodlit Training', alt: 'Evening training session under floodlights at the academy ground', shape: 'square' },
-  { file: 'fb-gal-match', caption: 'Junior Match', alt: 'Young School of Soccer players during a match', shape: 'tall' },
-  { file: 'fb-gal-drill', caption: 'Warm-up Drill', alt: 'Players in bibs doing a warm-up stretch together', shape: 'square' },
+  { file: 'fb-sports-day-1', caption: 'Team Spirit', captionHi: 'टीम भावना', alt: 'School of Soccer players and coaches with footballs at the National Sports Day 2024 celebration', shape: 'square' },
+  { file: 'fb-girls-team', caption: 'Girls’ Team', captionHi: 'लड़कियों की टीम', alt: 'The School of Soccer girls’ team seated in kit on the ground', shape: 'wide' },
+  { file: 'fb-muzaffarpur', caption: 'Match Day', captionHi: 'मैच का दिन', alt: 'School of Soccer number 14 watching the match against Muzaffarpur at Banhara', shape: 'wide' },
+  { file: 'fb-childrens-day', caption: 'Children’s Day Final', captionHi: 'बाल दिवस फाइनल', alt: 'Three School of Soccer players at the Children’s Day final, 2024', shape: 'wide' },
+  { file: 'fb-gal-bibs', caption: 'Young Warriors', captionHi: 'नन्हे वॉरियर्स', alt: 'Four young School of Soccer players in orange training bibs beside practice cones', shape: 'tall' },
+  { file: 'fb-gal-floodlit', caption: 'Floodlit Training', captionHi: 'फ्लडलाइट में ट्रेनिंग', alt: 'Evening training session under floodlights at the academy ground', shape: 'square' },
+  { file: 'fb-gal-match', caption: 'Junior Match', captionHi: 'जूनियर मैच', alt: 'Young School of Soccer players during a match', shape: 'tall' },
+  { file: 'fb-gal-drill', caption: 'Warm-up Drill', captionHi: 'वार्म-अप ड्रिल', alt: 'Players in bibs doing a warm-up stretch together', shape: 'square' },
 ]
 

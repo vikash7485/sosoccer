@@ -1,20 +1,22 @@
 import { Trophy, Medal, PartyPopper, GraduationCap, Users, Flag, ShieldCheck, ExternalLink } from 'lucide-react'
-import { achievements, recognition, stats } from '../config/research'
+import { achievements, recognition, recognitionHi, stats } from '../config/research'
 import { site } from '../config/site'
 import { CountUp, FacebookIcon, Reveal, SectionHeading, SmartImage } from './ui'
+import { useLang } from '../i18n'
 
 const icons = { trophy: Trophy, award: Medal, event: PartyPopper, player: GraduationCap, team: Users, start: Flag }
 
 export default function Achievements() {
+  const { t, f, lang } = useLang()
   return (
     <section id="achievements" className="section relative overflow-hidden" aria-labelledby="achievements-title">
       <div className="pointer-events-none absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full bg-pitch-600/25 blur-3xl" aria-hidden="true" />
       <div className="container-x relative">
         <SectionHeading
           center
-          eyebrow="Achievements"
-          title={<span id="achievements-title">Milestones on the Pitch</span>}
-          intro="Real moments from the academy’s own posts and its Google reviews. Each one shows where it comes from."
+          eyebrow={t('Achievements', 'उपलब्धियाँ')}
+          title={<span id="achievements-title">{t('Milestones on the Pitch', 'मैदान पर हमारी उपलब्धियाँ')}</span>}
+          intro={t('Real moments from the academy’s own posts and its Google reviews. Each one shows where it comes from.', 'अकादमी की अपनी पोस्ट और गूगल रिव्यू से लिए गए असली पल। हर एक के साथ उसका स्रोत दिया गया है।')}
         />
 
         {/* Stat band */}
@@ -22,7 +24,7 @@ export default function Achievements() {
           {stats.map((s, i) => (
             <div key={s.label} className={`p-6 text-center ${i % 2 ? 'border-l border-line' : ''} ${i > 1 ? 'border-t border-line sm:border-t-0' : ''} ${i === 2 ? 'sm:border-l' : ''}`} title={`Source: ${s.source}`}>
               <p className="font-display text-4xl font-extrabold tabular-nums text-accent sm:text-5xl"><CountUp value={s.value} /></p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted">{s.label}</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted">{f(s, 'label')}</p>
             </div>
           ))}
         </Reveal>
@@ -48,9 +50,9 @@ export default function Achievements() {
                     )}
                     <div className="p-6">
                       <time className="text-xs font-bold uppercase tracking-[0.16em] text-accent">{a.date}</time>
-                      <h3 className="mt-1.5 text-2xl font-extrabold uppercase leading-tight sm:text-3xl">{a.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted">{a.text}</p>
-                      <p className="mt-4 text-[11px] text-muted/80">Source: {a.source}</p>
+                      <h3 className="mt-1.5 text-2xl font-extrabold uppercase leading-tight sm:text-3xl">{f(a, 'title')}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted">{f(a, 'text')}</p>
+                      <p className="mt-4 text-[11px] text-muted/80">{t('Source:', 'स्रोत:')} {a.source}</p>
                     </div>
                   </article>
                 </Reveal>
@@ -63,11 +65,11 @@ export default function Achievements() {
         <Reveal variant="zoom" className="mx-auto mt-6 max-w-5xl rounded-3xl border border-line bg-gradient-to-br from-pitch-700/60 to-pitch-900 p-7 sm:p-9">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-md">
-              <h3 className="text-3xl font-extrabold uppercase">Players at every level</h3>
-              <p className="mt-2 text-sm text-muted">As described by players and parents in Google reviews.</p>
+              <h3 className="text-3xl font-extrabold uppercase">{t('Players at every level', 'हर स्तर पर खिलाड़ी')}</h3>
+              <p className="mt-2 text-sm text-muted">{t('As described by players and parents in Google reviews.', 'जैसा खिलाड़ियों और अभिभावकों ने गूगल रिव्यू में बताया है।')}</p>
             </div>
             <ul className="grid gap-3 sm:grid-cols-2 md:max-w-xl">
-              {recognition.map((r) => (
+              {(lang === 'hi' ? recognitionHi : recognition).map((r) => (
                 <li key={r} className="flex gap-2.5 text-sm text-muted">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                   {r}
@@ -79,7 +81,7 @@ export default function Achievements() {
 
         <div className="mt-10 text-center">
           <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="btn-outline">
-            <FacebookIcon className="h-4 w-4" /> Follow our journey on Facebook <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            <FacebookIcon className="h-4 w-4" /> {t('Follow our journey on Facebook', 'फेसबुक पर हमारा सफ़र देखें')} <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
         </div>
       </div>

@@ -13,8 +13,14 @@ export const site = {
   name: 'School of Soccer',
   tagline: 'Football Academy in Samastipur',
   address: 'Near Patel Field, Stadium Road, Uttarayan, Samastipur, Bihar 848101',
+  addressHi: 'पटेल मैदान के पास, स्टेडियम रोड, उत्तरायण, समस्तीपुर, बिहार 848101',
   addressShort: 'Stadium Road, Uttarayan, Samastipur',
+  addressShortHi: 'स्टेडियम रोड, उत्तरायण, समस्तीपुर',
   timings: '6:00 AM to 9:00 PM, all days',
+  timingsHi: 'सुबह 6:00 से रात 9:00 बजे तक, हर दिन',
+  // Opening hours used by the live "Open now" badge (India time, every day)
+  openHour: 6,
+  closeHour: 21,
 
   phoneDisplay: `+91 ${PHONE_DIGITS}`,
   phoneHref: `tel:+91${PHONE_DIGITS}`,
@@ -43,12 +49,13 @@ export function whatsappLink(message = WHATSAPP_MESSAGE) {
 export const externalLink = { target: '_blank', rel: 'noopener noreferrer' }
 
 export const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Founder', href: '#founder' },
-  { label: 'Programs', href: '#programs' },
-  { label: 'Achievements', href: '#achievements' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Reviews', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', labelHi: 'होम', href: '#home' },
+  { label: 'About', labelHi: 'परिचय', href: '#about' },
+  { label: 'Founder', labelHi: 'संस्थापक', href: '#founder' },
+  { label: 'Programs', labelHi: 'प्रोग्राम', href: '#programs' },
+  { label: 'Stars', labelHi: 'सितारे', href: '#stars' },
+  { label: 'Achievements', labelHi: 'उपलब्धियाँ', href: '#achievements' },
+  { label: 'Gallery', labelHi: 'गैलरी', href: '#gallery' },
+  { label: 'Reviews', labelHi: 'रिव्यू', href: '#testimonials' },
+  { label: 'Contact', labelHi: 'संपर्क', href: '#contact' },
 ]

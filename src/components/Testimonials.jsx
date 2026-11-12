@@ -3,6 +3,9 @@ import { Star, ExternalLink } from 'lucide-react'
 import { googleRating, reviews } from '../config/research'
 import { site } from '../config/site'
 import { CountUp, Reveal, SectionHeading } from './ui'
+import { useLang } from '../i18n'
+
+const badgeHi = { 'Former player · Local Guide': 'पूर्व खिलाड़ी · लोकल गाइड', 'Former player': 'पूर्व खिलाड़ी', 'Local Guide': 'लोकल गाइड' }
 
 function GoogleG(props) {
   return (
@@ -24,6 +27,7 @@ const Stars = () => (
 )
 
 export default function Testimonials() {
+  const { t, lang } = useLang()
   const trackRef = useRef(null)
   const [active, setActive] = useState(0)
 
@@ -45,7 +49,7 @@ export default function Testimonials() {
     <section id="testimonials" className="section relative bg-pitch-900" aria-labelledby="testimonials-title">
       <div className="container-x">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <SectionHeading eyebrow="Google reviews" title={<span id="testimonials-title">What Parents &amp; Players Say</span>} />
+          <SectionHeading eyebrow={t('Google reviews', 'गूगल रिव्यू')} title={<span id="testimonials-title">{t('What Parents & Players Say', 'अभिभावक और खिलाड़ी क्या कहते हैं')}</span>} />
           <Reveal variant="right" delay={80} className="flex flex-col gap-5 rounded-3xl border border-line bg-pitch-800 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <GoogleG className="h-10 w-10 shrink-0" />
@@ -55,12 +59,12 @@ export default function Testimonials() {
                   <span className="text-sm text-muted">/ 5</span>
                 </p>
                 <p className="mt-1 text-sm text-muted">
-                  {googleRating.count} reviews on Google · {googleRating.asOf}
+                  {googleRating.count} {t('reviews on Google', 'गूगल रिव्यू')} · {t(googleRating.asOf, 'नवंबर 2026')}
                 </p>
               </div>
             </div>
             <a href={site.googleMaps} target="_blank" rel="noopener noreferrer" className="btn-primary shrink-0">
-              Read all on Google <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              {t('Read all on Google', 'गूगल पर सभी पढ़ें')} <ExternalLink className="h-4 w-4" aria-hidden="true" />
             </a>
           </Reveal>
         </div>
@@ -70,7 +74,7 @@ export default function Testimonials() {
           ref={trackRef}
           onScroll={onTrackScroll}
           className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 [scrollbar-width:none] md:mx-0 md:mt-12 md:block md:columns-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:columns-3 [&::-webkit-scrollbar]:hidden"
-          aria-label="Google reviews — swipe to see more"
+          aria-label={t('Google reviews — swipe to see more', 'गूगल रिव्यू — और देखने के लिए स्वाइप करें')}
         >
           {reviews.map((r, i) => (
             <Reveal
@@ -86,14 +90,14 @@ export default function Testimonials() {
                 <GoogleG className="h-5 w-5" />
               </div>
               <blockquote className={`mt-4 leading-relaxed text-muted ${r.featured ? 'text-base sm:text-lg' : 'text-sm'}`}>“{r.text}”</blockquote>
-              {r.translated && <p className="mt-2 text-[11px] text-muted/80">Translated from Hindi by Google</p>}
+              {r.translated && <p className="mt-2 text-[11px] text-muted/80">{t('Translated from Hindi by Google', 'गूगल द्वारा हिंदी से अनुवादित')}</p>}
               <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-accent to-accent-600 font-display text-lg font-bold uppercase text-pitch-950" aria-hidden="true">
                   {r.name.trim()[0]}
                 </span>
                 <span>
                   <span className="block text-sm font-semibold capitalize">{r.name.toLowerCase()}</span>
-                  <span className="block text-xs text-muted/80">{r.badge ? `${r.badge} · ` : ''}Google review</span>
+                  <span className="block text-xs text-muted/80">{r.badge ? `${lang === 'hi' ? badgeHi[r.badge] || r.badge : r.badge} · ` : ''}{t('Google review', 'गूगल रिव्यू')}</span>
                 </span>
               </figcaption>
             </Reveal>
@@ -108,17 +112,17 @@ export default function Testimonials() {
                 key={r.name}
                 type="button"
                 onClick={() => goTo(i)}
-                aria-label={`Show review ${i + 1} of ${reviews.length}`}
+                aria-label={t(`Show review ${i + 1} of ${reviews.length}`, `रिव्यू ${i + 1} / ${reviews.length}`)}
                 aria-current={i === active}
                 className={`h-2 rounded-full transition-all duration-300 ${i === active ? 'w-6 bg-accent' : 'w-2 bg-line'}`}
               />
             ))}
           </div>
-          <span className="text-xs text-muted">Swipe →</span>
+          <span className="text-xs text-muted">{t('Swipe →', 'स्वाइप करें →')}</span>
         </div>
 
         <p className="mt-4 text-center text-xs text-muted/80">
-          Reviews are quoted as written on Google. Some are shortened (marked …).
+          {t('Reviews are quoted as written on Google. Some are shortened (marked …).', 'रिव्यू गूगल पर जैसे लिखे गए हैं वैसे ही दिए गए हैं। कुछ छोटे किए गए हैं (… से चिह्नित)।')}
         </p>
       </div>
     </section>
