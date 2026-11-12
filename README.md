@@ -50,3 +50,8 @@ Visitors can add School of Soccer to their phone's home screen and open it like 
 Files: `public/manifest.webmanifest`, `public/sw.js`, `public/icons/`, `src/components/InstallApp.jsx`.
 **Installing only works on HTTPS** (any normal host — Netlify, Vercel, Hostinger with SSL…) or localhost.
 After changing site files, bump `CACHE = 'sos-v1'` in `public/sw.js` (e.g. `sos-v2`) so installed apps pick up the update.
+
+## 5. Replacing a video or photo
+Browsers keep files in `/videos`, `/images` and `/icons` for 30 days. **When you replace one, give it a new file name**
+(e.g. `stadium-720.mp4` → `stadium2-720.mp4`) and update the name in the code. Re-using the same name means
+visitors keep seeing the old file. Also bump `CACHE` in `public/sw.js`.

@@ -51,7 +51,7 @@ export default function Legends() {
     <section ref={ref} id="legends" className="section relative isolate overflow-hidden" aria-labelledby="legends-title">
       {/* Stadium backdrop with slow zoom + deep blue tint */}
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <img src="/videos/hero-poster.webp" alt="" loading="lazy" decoding="async" className="legends-zoom h-full w-full object-cover" />
+        <img src="/videos/stadium-poster.webp" alt="" loading="lazy" decoding="async" className="legends-zoom h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-pitch-950/95 via-pitch-950/80 to-pitch-950/95" />
         <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_40%,color-mix(in_srgb,var(--color-accent)_14%,transparent),transparent_70%)]" />
       </div>

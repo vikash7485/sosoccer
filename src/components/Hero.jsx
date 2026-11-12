@@ -14,8 +14,8 @@ function HeroVideo() {
   const ref = useRef(null)
   const [src] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
-      ? '/videos/hero-480.mp4'
-      : '/videos/hero-720.mp4',
+      ? '/videos/stadium-480.mp4'
+      : '/videos/stadium-720.mp4',
   )
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function HeroVideo() {
       ref={ref}
       className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       src={src}
-      poster="/videos/hero-poster.webp"
+      poster="/videos/stadium-poster.webp"
       autoPlay
       muted
       loop
