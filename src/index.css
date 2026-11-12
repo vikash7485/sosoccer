@@ -148,6 +148,13 @@ html, body { overflow-x: clip; }
   75% { transform: rotate(-6deg); }
 }
 
+/* ─── Legends section: slow stadium zoom ─── */
+@keyframes legends-zoom {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1.18); }
+}
+.legends-zoom { animation: legends-zoom 24s ease-in-out infinite alternate; }
+
 /* ─── Scroll progress bar ─── */
 .scroll-progress { transform-origin: left; transform: scaleX(0); }
 
@@ -219,7 +226,7 @@ html, body { overflow-x: clip; }
   .reveal, .reveal-left, .reveal-right, .reveal-zoom, .reveal-draw { opacity: 1; transform: none; transition: none; }
   .eyebrow-line { width: 1.5rem; transition: none; }
   .hero-in { opacity: 1; animation: none; }
-  .text-shimmer, .ticker-track, .shine-loop::after { animation: none; }
+  .text-shimmer, .ticker-track, .shine-loop::after, .legends-zoom { animation: none; }
   .btn-primary:hover::after { transition: none; transform: translateX(-120%); }
   .field-line { animation: none; stroke-dashoffset: 0; }
   .hero-ball, .spin-slow, .pulse-ring::before { animation: none; }
@@ -296,7 +303,7 @@ footer.bg-pitch-950 {
 }
 
 /* BLUE + YELLOW */
-#programs, #testimonials {
+#programs, #testimonials, #legends {
   --color-pitch-950: #0a2472; --color-pitch-900: #0e2f8f; --color-pitch-800: #123a9e;
   --color-pitch-700: #0d2c86; --color-pitch-600: #1f4bc0; --color-pitch-500: #4f7cff;
   --color-ink: #ffffff; --color-line: #2c56c9; --color-muted: #d6e0ff;

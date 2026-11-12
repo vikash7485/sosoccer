@@ -4,7 +4,8 @@ import { externalLink, site, whatsappLink } from '../config/site'
 import { WhatsAppIcon } from './ui'
 
 /**
- * Background video — the academy's 6-second clip from its Google Business Profile.
+ * Background video — floodlit stadium match (13 s), free stock footage from Pexels
+ * (pexels.com/video/11918917, Pexels License: free for commercial use, no attribution required).
  * 480p on phones, 720p on larger screens; muted, looping, no controls.
  * Pauses when scrolled out of view and stays on the poster frame for
  * visitors who prefer reduced motion.

@@ -5,6 +5,7 @@ import Founder from './components/Founder'
 import Achievements from './components/Achievements'
 import Programs from './components/Programs'
 import WhyUs from './components/WhyUs'
+import Legends from './components/Legends'
 import Gallery from './components/Gallery'
 import Testimonials from './components/Testimonials'
 import Enquiry from './components/Enquiry'
@@ -28,6 +29,7 @@ export default function App() {
         <Founder />
         <Programs />
         <WhyUs />
+        <Legends />
         <Achievements />
         <Gallery />
         <Testimonials />

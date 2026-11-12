@@ -21,7 +21,7 @@ and save them in **`/raw-images`** with these names:
 
 | File name | Used for | Suggested photo |
 |---|---|---|
-| _(not needed)_ | Homepage background | Uses the 6-second video in `public/videos/` (from the Google Business Profile) |
+| _(not needed)_ | Homepage background | Stadium video in `public/videos/` (Pexels #11918917, free Pexels License) |
 | `about.jpg` | About section | Coach guiding players |
 | `gallery-01.jpg` … `gallery-10.jpg` | Gallery | Drills, matches, team photo, celebrations, ground |
 

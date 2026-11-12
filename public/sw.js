@@ -4,7 +4,7 @@
 //  • Built JS/CSS, images, icons: cache first (they have unique names or rarely change).
 //  • Videos, maps, WhatsApp and other sites: always straight from the network.
 
-const CACHE = 'sos-v4'
+const CACHE = 'sos-v5'
 const PRECACHE = ['/', '/manifest.webmanifest', '/favicon.svg', '/icons/icon-192.png', '/icons/icon-512.png', '/videos/hero-poster.webp']
 
 self.addEventListener('install', (event) => {
