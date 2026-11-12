@@ -12,6 +12,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
 import InstallApp from './components/InstallApp'
+import { ScrollProgress } from './components/ui'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-pitch-950">
         Skip to content
       </a>
+      <ScrollProgress />
       <Header />
       <main id="main">
         <Hero />

@@ -71,7 +71,7 @@ export default function Enquiry() {
             title={<span id="join-title">Join School of Soccer</span>}
             intro="Fill in a few details and we’ll get back to you about batches, timings and fees. Prefer to talk? Call or WhatsApp us anytime."
           />
-          <Reveal delay={120} className="mt-8 grid gap-4">
+          <Reveal variant="left" delay={120} className="mt-8 grid gap-4">
             <div className="flex items-start gap-4 rounded-2xl border border-line bg-pitch-800 p-5">
               <Clock className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
               <div><p className="font-semibold">Morning, Evening & Weekend batches</p><p className="text-sm text-muted">Open {site.timings}</p></div>
@@ -83,7 +83,7 @@ export default function Enquiry() {
           </Reveal>
         </div>
 
-        <Reveal delay={100} className="rounded-[2rem] border border-line bg-gradient-to-br from-pitch-700/80 to-pitch-900 p-6 shadow-2xl shadow-accent/10 sm:p-9">
+        <Reveal variant="right" delay={100} className="rounded-[2rem] border border-line bg-gradient-to-br from-pitch-700/80 to-pitch-900 p-6 shadow-2xl shadow-accent/10 sm:p-9">
           {submitted ? (
             <div className="flex min-h-[420px] flex-col items-center justify-center text-center" role="status" aria-live="polite">
               <span className="grid h-16 w-16 place-items-center rounded-full bg-whatsapp/15 text-whatsapp">

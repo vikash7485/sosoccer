@@ -1,6 +1,6 @@
 import { Quote, Flag, Users, Sprout } from 'lucide-react'
 import { founder, googleRating } from '../config/research'
-import { Reveal, SectionHeading, SmartImage } from './ui'
+import { CountUp, Reveal, SectionHeading, SmartImage } from './ui'
 
 const facts = [
   { icon: Flag, label: 'Founded', value: `${founder.established}, Samastipur` },
@@ -14,7 +14,7 @@ export default function Founder() {
       <div className="pointer-events-none absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
       <div className="container-x relative grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         {/* Founder card: portrait on top, academy facts below */}
-        <Reveal className="mx-auto w-full max-w-md lg:sticky lg:top-28 lg:max-w-none">
+        <Reveal variant="zoom" className="mx-auto w-full max-w-md lg:sticky lg:top-28 lg:max-w-none">
           <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pitch-600 via-pitch-700 to-pitch-900 shadow-2xl shadow-black/30">
             {/* Portrait */}
             <div className="relative">
@@ -41,7 +41,7 @@ export default function Founder() {
               <div className="p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">Google rating</p>
                 <p className="mt-1 font-display text-4xl font-extrabold leading-none sm:text-5xl">
-                  {googleRating.rating}
+                  <CountUp value={googleRating.rating.toFixed(1)} />
                   <span className="text-accent">★</span>
                 </p>
                 <p className="mt-1.5 text-xs text-muted">{googleRating.count} Google reviews</p>
@@ -62,7 +62,7 @@ export default function Founder() {
             </p>
           </Reveal>
 
-          <Reveal delay={140} as="figure" className="mt-8 rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 to-transparent p-6 sm:p-7">
+          <Reveal delay={140} as="figure" variant="right" className="mt-8 rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 to-transparent p-6 sm:p-7">
             <Quote className="h-8 w-8 text-accent" aria-hidden="true" />
             <blockquote className="mt-3 font-display text-2xl font-bold uppercase leading-tight sm:text-3xl">“{founder.quote}”</blockquote>
             <figcaption className="mt-3 text-xs text-muted/80">— {founder.name}, {founder.quoteSource}</figcaption>

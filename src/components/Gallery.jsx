@@ -20,7 +20,7 @@ export default function Gallery() {
         {/* Masonry via CSS columns */}
         <div className="mt-12 columns-2 gap-3 sm:gap-4 lg:columns-3 xl:columns-4">
           {galleryImages.map((img, i) => (
-            <Reveal key={img.file} as="figure" delay={(i % 4) * 70} className="group relative mb-3 break-inside-avoid overflow-hidden rounded-2xl border border-line sm:mb-4">
+            <Reveal key={img.file} as="figure" variant="zoom" delay={(i % 4) * 90} className="group relative mb-3 break-inside-avoid overflow-hidden rounded-2xl border border-line sm:mb-4">
               <SmartImage
                 file={img.file}
                 alt={img.alt}

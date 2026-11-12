@@ -38,7 +38,7 @@ export default function Programs() {
             >
               <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-accent/10 blur-2xl transition group-hover:bg-accent/20" aria-hidden="true" />
               <div className="flex items-start justify-between">
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-accent to-accent-600 text-pitch-950 shadow-lg shadow-accent/20">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-accent to-accent-600 text-pitch-950 shadow-lg shadow-accent/20 transition-shadow group-hover:animate-[wiggle_0.6s_ease-in-out] group-hover:shadow-accent/50">
                   <Icon className="h-7 w-7" aria-hidden="true" />
                 </span>
                 <span className="rounded-full bg-pitch-600 px-3 py-1 text-xs font-semibold text-muted">{ages}</span>

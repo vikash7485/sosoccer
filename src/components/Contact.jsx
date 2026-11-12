@@ -16,7 +16,7 @@ export default function Contact() {
         <SectionHeading center eyebrow="Location" title={<span id="contact-title">Visit Our Academy</span>} />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-5">
-          <Reveal as="address" className="card flex flex-col p-7 not-italic sm:p-9 lg:col-span-2">
+          <Reveal as="address" variant="left" className="card flex flex-col p-7 not-italic sm:p-9 lg:col-span-2">
             <div className="flex gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent/15 text-accent"><MapPin className="h-6 w-6" aria-hidden="true" /></span>
               <div>
@@ -51,7 +51,7 @@ export default function Contact() {
             </a>
           </Reveal>
 
-          <Reveal delay={120} className="relative min-h-[360px] overflow-hidden rounded-3xl border border-line lg:col-span-3">
+          <Reveal variant="right" delay={120} className="relative min-h-[360px] overflow-hidden rounded-3xl border border-line lg:col-span-3">
             <iframe
               title="Map showing School of Soccer, Patel Field, Stadium Road, Samastipur"
               src="https://www.google.com/maps?q=Patel+Field,+Stadium+Road,+Samastipur,+Bihar+848101&output=embed"

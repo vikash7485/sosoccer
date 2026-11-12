@@ -34,7 +34,7 @@ export default function Header() {
           <ul className="flex items-center gap-1">
             {navLinks.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="rounded-full px-3 py-2 text-sm font-medium text-muted transition hover:bg-pitch-600 hover:text-accent">
+                <a href={l.href} className="relative rounded-full px-3 py-2 text-sm font-medium text-muted transition hover:text-accent after:absolute after:inset-x-3 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100">
                   {l.label}
                 </a>
               </li>

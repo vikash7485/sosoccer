@@ -29,7 +29,7 @@ if (typeof window !== 'undefined') {
 }
 
 /** Fades children in when they scroll into view — content can never get stuck hidden. */
-export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
+export function Reveal({ as: Tag = 'div', variant = 'up', delay = 0, className = '', style, children, ...rest }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
 
@@ -66,8 +66,8 @@ export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, .
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? 'is-visible' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`reveal ${variant !== 'up' ? `reveal-${variant}` : ''} ${visible ? 'is-visible' : ''} ${className}`}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
       {...rest}
     >
       {children}
@@ -75,11 +75,70 @@ export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, .
   )
 }
 
+/** Number that counts up when it scrolls into view, e.g. "114", "4.9★", "1.3K", "2009". */
+export function CountUp({ value, duration = 1600, className = '' }) {
+  const m = String(value).match(/^([\d.]+)(.*)$/)
+  const target = m ? parseFloat(m[1]) : NaN
+  const suffix = m ? m[2] : ''
+  const decimals = m && m[1].includes('.') ? m[1].split('.')[1].length : 0
+  const from = target > 1900 && target < 2100 ? target - 30 : 0 // years count up from a few decades back
+  const ref = useRef(null)
+  const [n, setN] = useState(from)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || isNaN(target)) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !('IntersectionObserver' in window)) return setN(target)
+    let raf
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      io.disconnect()
+      const t0 = performance.now()
+      const tick = (t) => {
+        const p = Math.min(1, (t - t0) / duration)
+        const eased = 1 - Math.pow(1 - p, 3)
+        setN(from + (target - from) * eased)
+        if (p < 1) raf = requestAnimationFrame(tick)
+      }
+      raf = requestAnimationFrame(tick)
+    }, { threshold: 0.4 })
+    io.observe(el)
+    return () => { io.disconnect(); cancelAnimationFrame(raf) }
+  }, [target, from, duration])
+
+  if (isNaN(target)) return <span className={className}>{value}</span>
+  return (
+    <span ref={ref} className={className} aria-label={String(value)}>
+      <span aria-hidden="true">{n.toFixed(decimals)}{suffix}</span>
+    </span>
+  )
+}
+
+/** Thin gold bar at the very top that fills as the page is scrolled. */
+export function ScrollProgress() {
+  const ref = useRef(null)
+  useEffect(() => {
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      if (ref.current) ref.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll) }
+  }, [])
+  return <div ref={ref} className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-gradient-to-r from-accent to-accent-600" aria-hidden="true" />
+}
+
 export function SectionHeading({ eyebrow, title, intro, center = false }) {
   return (
     <Reveal className={center ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
       <span className="eyebrow">
-        <span className="h-px w-6 bg-accent" aria-hidden="true" />
+        <span className="eyebrow-line h-px bg-accent" aria-hidden="true" />
         {eyebrow}
       </span>
       <h2 className="section-title">{title}</h2>
@@ -175,8 +234,8 @@ export function WhatsAppIcon(props) {
 
 export function Logo({ className = '' }) {
   return (
-    <a href="#home" className={`flex items-center gap-2.5 ${className}`} aria-label="School of Soccer — home">
-      <img src="/favicon.svg" alt="" width="40" height="40" className="h-10 w-10" />
+    <a href="#home" className={`group flex items-center gap-2.5 ${className}`} aria-label="School of Soccer — home">
+      <img src="/favicon.svg" alt="" width="40" height="40" className="h-10 w-10 transition-transform duration-700 ease-out group-hover:rotate-[360deg] motion-reduce:transition-none" />
       <span className="whitespace-nowrap font-display text-xl font-extrabold uppercase leading-none tracking-wide">
         School <span className="text-accent">of</span> Soccer
       </span>

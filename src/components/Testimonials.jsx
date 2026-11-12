@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Star, ExternalLink } from 'lucide-react'
 import { googleRating, reviews } from '../config/research'
 import { site } from '../config/site'
-import { Reveal, SectionHeading } from './ui'
+import { CountUp, Reveal, SectionHeading } from './ui'
 
 function GoogleG(props) {
   return (
@@ -46,12 +46,12 @@ export default function Testimonials() {
       <div className="container-x">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <SectionHeading eyebrow="Google reviews" title={<span id="testimonials-title">What Parents &amp; Players Say</span>} />
-          <Reveal delay={80} className="flex flex-col gap-5 rounded-3xl border border-line bg-pitch-800 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <Reveal variant="right" delay={80} className="flex flex-col gap-5 rounded-3xl border border-line bg-pitch-800 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <GoogleG className="h-10 w-10 shrink-0" />
               <div>
                 <p className="flex items-baseline gap-2">
-                  <span className="font-display text-5xl font-extrabold leading-none">{googleRating.rating}</span>
+                  <span className="font-display text-5xl font-extrabold leading-none"><CountUp value={googleRating.rating.toFixed(1)} /></span>
                   <span className="text-sm text-muted">/ 5</span>
                 </p>
                 <p className="mt-1 text-sm text-muted">

@@ -13,7 +13,7 @@ export default function About() {
   return (
     <section id="about" className="section relative" aria-labelledby="about-title">
       <div className="container-x grid items-center gap-14 lg:grid-cols-2">
-        <Reveal className="relative order-2 lg:order-1">
+        <Reveal variant="left" className="relative order-2 lg:order-1">
           <div className="relative overflow-hidden rounded-[2rem] border border-line shadow-2xl shadow-accent/10">
             <SmartImage {...aboutImage} sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/5]" />
             <div className="absolute inset-0 bg-gradient-to-t from-pitch-950/70 via-transparent to-transparent" />
@@ -42,8 +42,8 @@ export default function About() {
           </Reveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {highlights.map(({ icon: Icon, title, text }, i) => (
-              <Reveal key={title} delay={150 + i * 100} className="card p-6">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-accent/15 text-accent">
+              <Reveal key={title} variant="zoom" delay={150 + i * 100} className="card group p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-accent/20">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-accent/15 text-accent group-hover:animate-[wiggle_0.6s_ease-in-out]">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <h3 className="mt-4 text-2xl font-bold uppercase">{title}</h3>

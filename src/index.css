@@ -86,6 +86,71 @@
   .reveal { transform: translateY(14px); transition-duration: 0.5s; }
 }
 
+/* Reveal directions */
+.reveal-left  { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-zoom  { transform: scale(0.92); }
+@media (max-width: 767px) {
+  .reveal-left  { transform: translateX(-22px); }
+  .reveal-right { transform: translateX(22px); }
+}
+/* Vertical line that draws itself downward (timeline) */
+.reveal-draw { opacity: 1; transform: scaleY(0); transform-origin: top; transition: transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal-draw.is-visible { transform: scaleY(1); }
+
+/* Section headings: the small line before the eyebrow grows in */
+.eyebrow-line { width: 0; transition: width 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s; }
+.reveal.is-visible .eyebrow-line { width: 1.5rem; }
+
+/* Sideways slides must never cause a horizontal scrollbar */
+html, body { overflow-x: clip; }
+
+/* ─── Hero entrance (plays once on load) ─── */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(26px); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+.hero-in { opacity: 0; animation: hero-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+
+/* Shimmering gold on "GROW" */
+@keyframes text-shimmer {
+  to { background-position: 200% center; }
+}
+.text-shimmer { background-size: 200% auto; animation: text-shimmer 4s linear infinite; }
+
+/* ─── Scrolling ticker ─── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track { animation: ticker 28s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+
+/* ─── Button light sweep (hover on all gold buttons; looping on hero Join Now) ─── */
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn-primary:hover::after { transition: transform 0.7s ease; transform: translateX(120%); }
+@keyframes shine-sweep {
+  0%, 70% { transform: translateX(-120%); }
+  100%    { transform: translateX(120%); }
+}
+.shine-loop::after { animation: shine-sweep 3.6s ease-in-out infinite; }
+
+/* ─── Icon wiggle on card hover ─── */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg) scale(1.08); }
+  50% { transform: rotate(10deg) scale(1.08); }
+  75% { transform: rotate(-6deg); }
+}
+
+/* ─── Scroll progress bar ─── */
+.scroll-progress { transform-origin: left; transform: scaleX(0); }
+
 /* Hero field-line + ball animations */
 @keyframes draw {
   to { stroke-dashoffset: 0; }
@@ -151,7 +216,11 @@
 @media (prefers-reduced-motion: reduce) {
   .why-fade, .why-kenburns, .why-progress, .install-slide { animation: none; }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal-left, .reveal-right, .reveal-zoom, .reveal-draw { opacity: 1; transform: none; transition: none; }
+  .eyebrow-line { width: 1.5rem; transition: none; }
+  .hero-in { opacity: 1; animation: none; }
+  .text-shimmer, .ticker-track, .shine-loop::after { animation: none; }
+  .btn-primary:hover::after { transition: none; transform: translateX(-120%); }
   .field-line { animation: none; stroke-dashoffset: 0; }
   .hero-ball, .spin-slow, .pulse-ring::before { animation: none; }
 }

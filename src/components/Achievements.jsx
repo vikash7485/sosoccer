@@ -1,7 +1,7 @@
 import { Trophy, Medal, PartyPopper, GraduationCap, Users, Flag, ShieldCheck, ExternalLink } from 'lucide-react'
 import { achievements, recognition, stats } from '../config/research'
 import { site } from '../config/site'
-import { FacebookIcon, Reveal, SectionHeading, SmartImage } from './ui'
+import { CountUp, FacebookIcon, Reveal, SectionHeading, SmartImage } from './ui'
 
 const icons = { trophy: Trophy, award: Medal, event: PartyPopper, player: GraduationCap, team: Users, start: Flag }
 
@@ -18,10 +18,10 @@ export default function Achievements() {
         />
 
         {/* Stat band */}
-        <Reveal className="mx-auto mt-12 grid max-w-4xl grid-cols-2 overflow-hidden rounded-3xl border border-line bg-pitch-800 sm:grid-cols-4">
+        <Reveal variant="zoom" className="mx-auto mt-12 grid max-w-4xl grid-cols-2 overflow-hidden rounded-3xl border border-line bg-pitch-800 sm:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className={`p-6 text-center ${i % 2 ? 'border-l border-line' : ''} ${i > 1 ? 'border-t border-line sm:border-t-0' : ''} ${i === 2 ? 'sm:border-l' : ''}`} title={`Source: ${s.source}`}>
-              <p className="font-display text-4xl font-extrabold text-accent sm:text-5xl">{s.value}</p>
+              <p className="font-display text-4xl font-extrabold tabular-nums text-accent sm:text-5xl"><CountUp value={s.value} /></p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted">{s.label}</p>
             </div>
           ))}
@@ -29,16 +29,17 @@ export default function Achievements() {
 
         {/* Timeline */}
         <ol className="relative mx-auto mt-16 max-w-5xl">
-          <span className="absolute bottom-0 left-5 top-0 w-px bg-gradient-to-b from-accent via-line to-transparent md:left-1/2" aria-hidden="true" />
+          {/* The line draws itself downward as the timeline comes into view */}
+          <Reveal as="span" variant="draw" className="absolute bottom-0 left-5 top-0 w-0.5 bg-gradient-to-b from-accent via-accent-600/60 to-transparent md:left-1/2" aria-hidden="true" />
           {achievements.map((a, i) => {
             const Icon = icons[a.kind]
             const right = i % 2 === 1
             return (
               <li key={a.title} className="relative mb-10 pl-16 md:mb-14 md:grid md:grid-cols-2 md:gap-14 md:pl-0">
-                <span className="absolute left-0 top-1 grid h-10 w-10 place-items-center rounded-full border-4 border-pitch-950 bg-gradient-to-br from-accent to-accent-600 text-pitch-950 md:left-1/2 md:-translate-x-1/2" aria-hidden="true">
+                <Reveal as="span" variant="zoom" className="absolute left-0 top-1 z-10 grid h-10 w-10 place-items-center rounded-full border-4 border-pitch-950 bg-gradient-to-br from-accent to-accent-600 text-pitch-950 shadow-lg shadow-accent/30 md:left-1/2 md:-translate-x-1/2" aria-hidden="true">
                   <Icon className="h-4 w-4" />
-                </span>
-                <Reveal delay={60} className={`${right ? 'md:col-start-2' : 'md:col-start-1 md:text-right'}`}>
+                </Reveal>
+                <Reveal variant={right ? 'right' : 'left'} delay={120} className={`${right ? 'md:col-start-2' : 'md:col-start-1 md:text-right'}`}>
                   <article className={`group overflow-hidden rounded-3xl border border-line bg-pitch-800/60 shadow-xl shadow-accent/10 transition hover:border-accent/40 ${right ? '' : 'md:ml-auto'}`}>
                     {a.image && (
                       <div className="overflow-hidden">
@@ -59,7 +60,7 @@ export default function Achievements() {
         </ol>
 
         {/* Recognition mentioned in reviews */}
-        <Reveal className="mx-auto mt-6 max-w-5xl rounded-3xl border border-line bg-gradient-to-br from-pitch-700/60 to-pitch-900 p-7 sm:p-9">
+        <Reveal variant="zoom" className="mx-auto mt-6 max-w-5xl rounded-3xl border border-line bg-gradient-to-br from-pitch-700/60 to-pitch-900 p-7 sm:p-9">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-md">
               <h3 className="text-3xl font-extrabold uppercase">Players at every level</h3>

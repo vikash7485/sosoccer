@@ -98,18 +98,26 @@ export default function Hero() {
       {/* Compact headline */}
       <div className="container-x flex flex-1 flex-col justify-center pb-8 pt-28 text-white sm:pt-32">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-black/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+          <span className="hero-in inline-flex items-center gap-2 rounded-full border border-accent/40 bg-black/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur" style={{ animationDelay: '0.1s' }}>
+            <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+            </span>
             Football Academy in Samastipur
           </span>
 
+          {/* Headline lines rise in one after another */}
           <h1 id="hero-title" className="mt-4 text-4xl font-extrabold uppercase leading-[0.95] drop-shadow-lg sm:text-5xl lg:text-6xl">
-            Learn. Play.
+            <span className="hero-in inline-block" style={{ animationDelay: '0.25s' }}>Learn.</span>{' '}
+            <span className="hero-in inline-block" style={{ animationDelay: '0.4s' }}>Play.</span>
             <br />
-            <span className="bg-gradient-to-r from-accent to-accent-600 bg-clip-text text-transparent">Grow</span> with Football.
+            <span className="hero-in inline-block" style={{ animationDelay: '0.55s' }}>
+              <span className="text-shimmer bg-gradient-to-r from-accent via-[#fff3b0] to-accent bg-clip-text text-transparent">Grow</span>
+            </span>{' '}
+            <span className="hero-in inline-block" style={{ animationDelay: '0.7s' }}>with Football.</span>
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85 drop-shadow sm:text-base">
+          <p className="hero-in mt-3 max-w-md text-sm leading-relaxed text-white/85 drop-shadow sm:text-base" style={{ animationDelay: '0.9s' }}>
             Professional football coaching for young players in Samastipur. Build skills, fitness, confidence, and teamwork.
           </p>
         </div>
@@ -117,7 +125,7 @@ export default function Hero() {
 
       {/* Action bar: admissions heading + timings, with the three buttons */}
       <div className="container-x relative pb-5 sm:pb-7">
-        <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="hero-in flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5 lg:flex-row lg:items-center lg:justify-between" style={{ animationDelay: '1.1s' }}>
           <div className="min-w-0">
             <p className="font-display text-lg font-extrabold uppercase tracking-wide text-accent sm:text-xl">Admissions Open</p>
             <div className="mt-1 flex flex-col gap-1 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-x-5">
@@ -133,7 +141,7 @@ export default function Hero() {
           </div>
 
           <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
-            <a href={whatsappLink()} {...externalLink} className="btn-primary !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
+            <a href={whatsappLink()} {...externalLink} className="btn-primary shine-loop !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
               Join Now <ArrowRight className="hidden h-4 w-4 sm:block" />
             </a>
             <a href={site.phoneHref} className="btn-outline !min-h-11 !gap-1.5 !border-white/70 !px-2 whitespace-nowrap text-[13px] !text-white hover:!bg-white hover:!text-[#0b0b0f] sm:!px-6 sm:text-sm">
@@ -146,16 +154,20 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Trust strip */}
-      <div className="relative border-y border-line bg-pitch-950/70 backdrop-blur-md">
-        <ul className="container-x flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted lg:justify-between sm:text-sm">
-          {trust.map((t, i) => (
-            <li key={t} className="flex items-center gap-6">
-              {i > 0 && <span className="hidden h-1.5 w-1.5 rotate-45 bg-accent lg:block" aria-hidden="true" />}
-              {t}
-            </li>
+      {/* Trust strip — endless scrolling ticker (list repeated twice for a seamless loop) */}
+      <div className="ticker relative overflow-hidden border-y border-line bg-pitch-950/70 backdrop-blur-md" aria-label={trust.join(', ')}>
+        <div className="ticker-track flex w-max" aria-hidden="true">
+          {[0, 1].map((copy) => (
+            <ul key={copy} className="flex shrink-0 items-center py-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted sm:text-sm">
+              {[...trust, ...trust].map((t, i) => (
+                <li key={`${copy}-${i}`} className="flex items-center whitespace-nowrap">
+                  <span className="px-6 sm:px-10">{t}</span>
+                  <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
+                </li>
+              ))}
+            </ul>
           ))}
-        </ul>
+        </div>
       </div>
 
     </section>
