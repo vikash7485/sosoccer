@@ -56,8 +56,8 @@ function OpenNowBadge() {
 }
 
 /**
- * Opening video — floodlit stadium match (13 s), free stock footage from Pexels
- * (pexels.com/video/11918917, Pexels License: free for commercial use).
+ * Opening video — a real 6-second clip of an S.O.S match at Patel Field, from the
+ * academy's Google Maps listing (uploaded Dec 2021). Original kept in raw-video/sos-match.mp4.
  * Shown clean, with no text or dark overlay on top. 480p on phones, 720p on
  * larger screens; muted and looping. Pauses when scrolled away and stays on the
  * poster frame for visitors who prefer reduced motion.
@@ -65,7 +65,7 @@ function OpenNowBadge() {
 function HeroVideo() {
   const ref = useRef(null)
   const [src] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches ? '/videos/stadium-480.mp4' : '/videos/stadium-720.mp4',
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches ? '/videos/sos-match-480.mp4' : '/videos/sos-match-720.mp4',
   )
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function HeroVideo() {
       ref={ref}
       className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       src={src}
-      poster="/videos/stadium-poster.webp"
+      poster="/videos/sos-match-poster.webp"
       autoPlay
       muted
       loop
