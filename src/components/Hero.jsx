@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Phone, ArrowRight, Clock, MapPin, Star, Trophy } from 'lucide-react'
 import { googleRating } from '../config/research'
 import { externalLink, site, whatsappLink } from '../config/site'
@@ -52,6 +52,54 @@ function OpenNowBadge() {
       </span>
       {text}
     </span>
+  )
+}
+
+/**
+ * Opening video — floodlit stadium match (13 s), free stock footage from Pexels
+ * (pexels.com/video/11918917, Pexels License: free for commercial use).
+ * Shown clean, with no text or dark overlay on top. 480p on phones, 720p on
+ * larger screens; muted and looping. Pauses when scrolled away and stays on the
+ * poster frame for visitors who prefer reduced motion.
+ */
+function HeroVideo() {
+  const ref = useRef(null)
+  const [src] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches ? '/videos/stadium-480.mp4' : '/videos/stadium-720.mp4',
+  )
+
+  useEffect(() => {
+    const video = ref.current
+    if (!video) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause()
+      return
+    }
+    video.play().catch(() => {})
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {})
+      else video.pause()
+    })
+    io.observe(video)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <video
+      ref={ref}
+      className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      src={src}
+      poster="/videos/stadium-poster.webp"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      disableRemotePlayback
+      aria-hidden="true"
+      tabIndex={-1}
+    />
   )
 }
 
@@ -116,10 +164,17 @@ export default function Hero() {
   const trustList = lang === 'hi' ? trustHi : trust
   return (
     <section id="home" className="relative isolate overflow-hidden bg-gradient-to-br from-[#eef5ff] via-white to-[#fff6d6]" aria-labelledby="hero-title">
+      {/* Opening video: full width, clean — no text on top */}
+      <div className="pt-[68px]">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#dbe8ff] sm:aspect-[16/9] lg:aspect-auto lg:h-[calc(100svh-68px)]">
+          <HeroVideo />
+        </div>
+      </div>
+
       <FieldGraphics />
       <div className="pointer-events-none absolute -left-24 top-24 -z-10 h-80 w-80 rounded-full bg-accent-600/15 blur-3xl" aria-hidden="true" />
 
-      <div className="container-x grid items-center gap-12 pb-16 pt-28 sm:pt-32 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:pb-20">
+      <div className="container-x grid items-center gap-12 pb-16 pt-12 sm:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:pb-20">
         <div>
           <span className="hero-in inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-accent shadow-md shadow-accent/10" style={{ animationDelay: '0.1s' }}>
             <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
