@@ -59,8 +59,8 @@ export default function Legends() {
     <section ref={ref} id="legends" className="section relative isolate overflow-hidden" aria-labelledby="legends-title">
       {/* Stadium backdrop with slow zoom + deep blue tint */}
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <img src="/videos/stadium-poster.webp" alt="" loading="lazy" decoding="async" className="legends-zoom h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-pitch-950/95 via-pitch-950/80 to-pitch-950/95" />
+        <img src="/images/g-crowd-1280.webp" srcSet="/images/g-crowd-640.webp 640w, /images/g-crowd-1280.webp 1280w, /images/g-crowd-1920.webp 1920w" sizes="100vw" alt="" loading="lazy" decoding="async" className="legends-zoom h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-[#eef5ff]/85 to-white/95" />
         <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_40%,color-mix(in_srgb,var(--color-accent)_14%,transparent),transparent_70%)]" />
       </div>
 
@@ -68,7 +68,7 @@ export default function Legends() {
         <SectionHeading center eyebrow={t('Legends’ words', 'दिग्गजों के शब्द')} title={<span id="legends-title">{t('Dream Big. Work Harder.', 'बड़े सपने देखो। और मेहनत करो।')}</span>} />
 
         <Reveal variant="zoom" className="mx-auto mt-12 max-w-4xl" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-          <figure className="relative rounded-[2rem] border border-white/15 bg-white/[0.06] px-6 py-10 text-center shadow-2xl shadow-black/40 backdrop-blur-md sm:px-14 sm:py-14">
+          <figure className="relative rounded-[2rem] border border-line bg-white/85 px-6 py-10 text-center shadow-2xl shadow-accent/15 backdrop-blur-md sm:px-14 sm:py-14">
             <Quote className="mx-auto h-10 w-10 text-accent sm:h-12 sm:w-12" aria-hidden="true" />
             <div key={active} className="why-fade" aria-live={playing ? 'off' : 'polite'}>
               <blockquote className="mt-6 font-display text-3xl font-extrabold uppercase leading-[1.05] text-ink sm:text-5xl">
@@ -82,7 +82,7 @@ export default function Legends() {
             </div>
 
             {/* timer bar */}
-            <div className="absolute inset-x-8 bottom-0 h-0.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+            <div className="absolute inset-x-8 bottom-0 h-0.5 overflow-hidden rounded-full bg-pitch-600" aria-hidden="true">
               <div key={`${active}-${playing}`} className={`h-full bg-accent ${playing ? 'why-progress' : 'w-0'}`} style={{ animationDuration: `${QUOTE_MS}ms` }} />
             </div>
           </figure>
@@ -97,7 +97,7 @@ export default function Legends() {
                 aria-selected={i === active}
                 onClick={() => setActive(i)}
                 className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                  i === active ? 'border-accent bg-accent text-pitch-950' : 'border-white/25 text-muted hover:border-accent hover:text-accent'
+                  i === active ? 'border-accent bg-accent text-pitch-950' : 'border-line bg-white text-muted hover:border-accent hover:text-accent'
                 }`}
               >
                 {x.name}

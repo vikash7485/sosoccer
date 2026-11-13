@@ -4,20 +4,22 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Barlow Condensed", "Inter", ui-sans-serif, sans-serif;
 
-  /* Five-colour scheme: black, gold, yellow, white and royal blue.
-     The root palette below is BLACK + GOLD (header, hero, dark sections, footer).
-     WHITE + BLUE and BLUE + YELLOW sections re-map these same variables further down. */
-  --color-pitch-950: #0b0b0f; /* background (also dark text on gold buttons) */
-  --color-pitch-900: #111116;
-  --color-pitch-800: #17171e; /* cards */
-  --color-pitch-700: #131318;
-  --color-pitch-600: #24242c; /* chips, hover fills */
-  --color-pitch-500: #3a3a46;
-  --color-ink: #fafafa;       /* headings */
-  --color-line: #2a2a33;      /* borders */
-  --color-muted: #b9bcc7;     /* body text */
-  --color-accent: #f5b700;    /* gold */
-  --color-accent-600: #ffd54a; /* yellow */
+  /* Bright, light scheme: white + royal blue, with sunny yellow/orange
+     and sky-blue section moods. Every component reads these variables;
+     sections further down re-map them for variety. No dark backgrounds. */
+  --color-pitch-950: #ffffff; /* page background (also text on blue/orange buttons) */
+  --color-pitch-900: #f5f8ff;
+  --color-pitch-800: #ffffff; /* cards */
+  --color-pitch-700: #eef3ff;
+  --color-pitch-600: #e3ecff; /* chips, hover fills */
+  --color-pitch-500: #93b4ff;
+  --color-ink: #0b1a3a;       /* headings */
+  --color-line: #dce5f5;      /* borders */
+  --color-muted: #475569;     /* body text */
+  --color-accent: #1d4ed8;    /* royal blue */
+  --color-accent-600: #3b82f6;
+  --color-sun: #ffc61a;       /* sunny yellow highlight */
+  --color-sun-600: #ff8a00;   /* orange */
   --color-whatsapp: #25d366;
   --color-whatsapp-600: #1ebe5a;
 }
@@ -62,10 +64,10 @@
     @apply border border-accent/70 text-accent hover:bg-accent hover:text-pitch-950;
   }
   .btn-whatsapp {
-    @apply bg-whatsapp text-[#0b0b0f] shadow-lg shadow-whatsapp/20 hover:bg-whatsapp-600;
+    @apply bg-whatsapp text-white shadow-lg shadow-whatsapp/20 hover:bg-whatsapp-600;
   }
   .card {
-    @apply rounded-3xl border border-line bg-pitch-800 shadow-xl shadow-black/20 backdrop-blur-sm;
+    @apply rounded-3xl border border-line bg-pitch-800 shadow-xl shadow-accent/10 backdrop-blur-sm;
   }
   .field {
     @apply w-full rounded-2xl border border-line bg-pitch-900/80 px-4 py-3.5 text-base text-ink placeholder:text-muted/60 transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30;
@@ -303,34 +305,33 @@ footer.bg-pitch-950 {
    Each section re-maps the palette variables, so every button, card,
    icon and text colour inside it switches automatically. */
 
-/* Quiz (black + gold) and Stars (white + blue) backgrounds */
-#finder {
-  background:
-    radial-gradient(50% 60% at 85% 20%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%),
-    linear-gradient(180deg, var(--color-pitch-950) 0%, var(--color-pitch-900) 100%);
-}
-#stars {
-  background:
-    radial-gradient(55% 50% at 50% 0%, color-mix(in srgb, var(--color-pitch-500) 30%, transparent), transparent 70%),
-    linear-gradient(180deg, var(--color-pitch-950) 0%, var(--color-pitch-900) 100%);
+/* WHITE + BLUE (root palette): #home, #about, #why, #gallery, #join, #stars */
+
+/* SKY BLUE — soft light-blue sections */
+#programs, #testimonials, #legends, #contact, footer {
+  --color-pitch-950: #ffffff; --color-pitch-900: #e8f1ff; --color-pitch-800: #ffffff;
+  --color-pitch-700: #dceaff; --color-pitch-600: #d3e4ff; --color-pitch-500: #7fa8ff;
+  --color-line: #c9dbf7;
 }
 
-/* WHITE + BLUE */
-#about, #why, #gallery, #join, #stars {
-  --color-pitch-950: #ffffff; --color-pitch-900: #f5f8ff; --color-pitch-800: #ffffff;
-  --color-pitch-700: #eef3ff; --color-pitch-600: #e0e9ff; --color-pitch-500: #93b4ff;
-  --color-ink: #0b1220; --color-line: #dfe6f3; --color-muted: #4b5563;
-  --color-accent: #1d4ed8; --color-accent-600: #2563eb;
-  color: var(--color-ink);
+/* SUNNY — warm cream + orange sections */
+#founder, #achievements, #finder {
+  --color-pitch-950: #ffffff; --color-pitch-900: #fff6dc; --color-pitch-800: #ffffff;
+  --color-pitch-700: #fff1c7; --color-pitch-600: #ffe9a8; --color-pitch-500: #ffc94d;
+  --color-ink: #2a1a00; --color-line: #f6dfa0; --color-muted: #5b4a2e;
+  --color-accent: #e8590c; --color-accent-600: #ff9f1c;
 }
 
-/* BLUE + YELLOW */
-#programs, #testimonials, #legends {
-  --color-pitch-950: #0a2472; --color-pitch-900: #0e2f8f; --color-pitch-800: #123a9e;
-  --color-pitch-700: #0d2c86; --color-pitch-600: #1f4bc0; --color-pitch-500: #4f7cff;
-  --color-ink: #ffffff; --color-line: #2c56c9; --color-muted: #d6e0ff;
-  --color-accent: #ffd60a; --color-accent-600: #f5b700;
-  color: var(--color-ink);
-}
+/* Light section backgrounds */
+#programs, #testimonials, #contact { background: linear-gradient(180deg, #eef5ff 0%, #ffffff 100%); }
+#founder, #achievements, #finder   { background: linear-gradient(180deg, #fff8e1 0%, #ffffff 100%); }
+footer.bg-pitch-950 { background: linear-gradient(180deg, #eaf2ff 0%, #dbe8ff 100%); }
 
-/* BLACK + GOLD sections (#founder, #achievements, #contact) use the root palette. */
+/* Playful football-dot pattern on light sections */
+#programs, #achievements, #testimonials, #finder { position: relative; isolation: isolate; }
+#programs::before, #achievements::before, #testimonials::before, #finder::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background-image: radial-gradient(color-mix(in srgb, var(--color-accent) 14%, transparent) 1.5px, transparent 1.6px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(180deg, black, transparent 60%);
+}

@@ -17,7 +17,7 @@ export default function Founder() {
       <div className="container-x relative grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         {/* Founder card: portrait on top, academy facts below */}
         <Reveal variant="zoom" className="mx-auto w-full max-w-md lg:sticky lg:top-28 lg:max-w-none">
-          <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pitch-600 via-pitch-700 to-pitch-900 shadow-2xl shadow-black/30">
+          <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pitch-600 via-pitch-700 to-pitch-900 shadow-2xl shadow-accent/15">
             {/* Portrait */}
             <div className="relative">
               <SmartImage

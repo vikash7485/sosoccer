@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { Phone, ArrowRight, Clock, MapPin } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Phone, ArrowRight, Clock, MapPin, Star, Trophy } from 'lucide-react'
+import { googleRating } from '../config/research'
 import { externalLink, site, whatsappLink } from '../config/site'
-import { WhatsAppIcon } from './ui'
+import { SmartImage, WhatsAppIcon } from './ui'
 import { useLang } from '../i18n'
 
 /** Current hour/minute in India, whatever time zone the visitor's phone is set to. */
@@ -40,100 +41,73 @@ function OpenNowBadge() {
   return (
     <span
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${
-        isOpen ? 'border-emerald-400/40 bg-emerald-500/15 text-emerald-300' : 'border-red-400/40 bg-red-500/15 text-red-300'
+        isOpen ? 'border-emerald-300 bg-emerald-50 text-emerald-700' : 'border-red-300 bg-red-50 text-red-700'
       }`}
       role="status"
       aria-live="polite"
     >
       <span className="relative flex h-2 w-2" aria-hidden="true">
         {isOpen && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />}
-        <span className={`relative inline-flex h-2 w-2 rounded-full ${isOpen ? 'bg-emerald-400' : 'bg-red-400'}`} />
+        <span className={`relative inline-flex h-2 w-2 rounded-full ${isOpen ? 'bg-emerald-500' : 'bg-red-500'}`} />
       </span>
       {text}
     </span>
   )
 }
 
-/**
- * Background video — floodlit stadium match (13 s), free stock footage from Pexels
- * (pexels.com/video/11918917, Pexels License: free for commercial use, no attribution required).
- * 480p on phones, 720p on larger screens; muted, looping, no controls.
- * Pauses when scrolled out of view and stays on the poster frame for
- * visitors who prefer reduced motion.
- */
-function HeroVideo() {
-  const ref = useRef(null)
-  const [src] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
-      ? '/videos/stadium-480.mp4'
-      : '/videos/stadium-720.mp4',
-  )
-
-  useEffect(() => {
-    const video = ref.current
-    if (!video) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) {
-      video.pause()
-      return
-    }
-    video.play().catch(() => {}) // some browsers need an explicit play() call
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) video.play().catch(() => {})
-      else video.pause()
-    })
-    io.observe(video)
-    return () => io.disconnect()
-  }, [])
-
-  return (
-    <video
-      ref={ref}
-      className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-      src={src}
-      poster="/videos/stadium-poster.webp"
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      disablePictureInPicture
-      disableRemotePlayback
-      aria-hidden="true"
-      tabIndex={-1}
-    />
-  )
-}
-
 const trust = ['Football Coaching', 'Fitness Training', 'Kids & Youth Batches', 'Samastipur']
 const trustHi = ['फुटबॉल कोचिंग', 'फिटनेस ट्रेनिंग', 'बच्चों व युवाओं के बैच', 'समस्तीपुर']
 
+/** Light football-pitch lines drawn in faint blue behind the hero */
 function FieldGraphics() {
   return (
-    <svg
-      className="pointer-events-none absolute inset-0 h-full w-full"
-      viewBox="0 0 1600 900"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden="true"
-    >
-      <g fill="none" stroke="white" strokeOpacity="0.13" strokeWidth="2">
+    <svg className="pointer-events-none absolute inset-0 -z-10 h-full w-full" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#1d4ed8" strokeOpacity="0.08" strokeWidth="3">
         <rect className="field-line" x="80" y="90" width="1440" height="720" rx="6" />
         <line className="field-line" x1="800" y1="90" x2="800" y2="810" />
         <circle className="field-line" cx="800" cy="450" r="120" />
         <rect className="field-line" x="80" y="260" width="200" height="380" />
         <rect className="field-line" x="1320" y="260" width="200" height="380" />
-        <path className="field-line" d="M280 380 A 90 90 0 0 1 280 520" />
-        <path className="field-line" d="M1320 380 A 90 90 0 0 0 1320 520" />
-      </g>
-      <circle cx="800" cy="450" r="5" fill="white" fillOpacity="0.25" />
-      {/* Slowly rolling ball */}
-      <g className="hero-ball" opacity="0.5">
-        <g className="spin-slow">
-          <circle r="14" fill="white" />
-          <path d="M0 -6 L5.7 -1.9 L3.5 4.9 L-3.5 4.9 L-5.7 -1.9 Z" fill="#05180f" />
-        </g>
       </g>
     </svg>
+  )
+}
+
+/** Collage of real academy photos (Facebook + Google Maps) with floating stat badges */
+function PhotoCollage() {
+  const { t } = useLang()
+  return (
+    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
+      <div className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 rounded-full bg-sun/50 blur-2xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-8 -left-8 h-48 w-48 rounded-full bg-accent-600/25 blur-2xl" aria-hidden="true" />
+      <div className="relative grid grid-cols-5 grid-rows-2 gap-3 sm:gap-4">
+        <div className="hero-in col-span-3 row-span-2 overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl shadow-accent/20" style={{ animationDelay: '0.3s' }}>
+          <SmartImage file="fb-training-day" eager label={false} alt="Girls and boys training with cones at Patel Field, Samastipur" sizes="(min-width:1024px) 30vw, 60vw" className="h-full min-h-[260px] w-full object-cover sm:min-h-[380px]" />
+        </div>
+        <div className="hero-in col-span-2 overflow-hidden rounded-[1.5rem] border-4 border-white shadow-xl shadow-accent/20" style={{ animationDelay: '0.5s' }}>
+          <SmartImage file="fb-girls-trophy" eager label={false} alt="S.O.S girls team holding a trophy" sizes="(min-width:1024px) 20vw, 40vw" className="h-full w-full object-cover" />
+        </div>
+        <div className="hero-in col-span-2 overflow-hidden rounded-[1.5rem] border-4 border-white shadow-xl shadow-accent/20" style={{ animationDelay: '0.7s' }}>
+          <SmartImage file="g-lineup" eager label={false} alt="School of Soccer players lined up before a match" sizes="(min-width:1024px) 20vw, 40vw" className="h-full w-full object-cover" />
+        </div>
+      </div>
+
+      {/* floating badges */}
+      <div className="hero-in absolute -left-2 top-6 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-xl shadow-accent/15 sm:-left-6" style={{ animationDelay: '0.9s' }}>
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-sun text-ink"><Star className="h-5 w-5 fill-current" aria-hidden="true" /></span>
+        <span className="leading-tight">
+          <span className="block font-display text-xl font-extrabold text-ink">{googleRating.rating.toFixed(1)} / 5</span>
+          <span className="block text-[11px] text-muted">{googleRating.count} {t('Google reviews', 'गूगल रिव्यू')}</span>
+        </span>
+      </div>
+      <div className="hero-in absolute -bottom-5 right-4 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-xl shadow-accent/15 sm:right-10" style={{ animationDelay: '1.05s' }}>
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-white"><Trophy className="h-5 w-5" aria-hidden="true" /></span>
+        <span className="leading-tight">
+          <span className="block font-display text-xl font-extrabold text-ink">{t('Since 2009', '2009 से')}</span>
+          <span className="block text-[11px] text-muted">{t('Boys & girls teams', 'लड़के व लड़कियों की टीमें')}</span>
+        </span>
+      </div>
+    </div>
   )
 }
 
@@ -141,19 +115,13 @@ export default function Hero() {
   const { t, f, lang } = useLang()
   const trustList = lang === 'hi' ? trustHi : trust
   return (
-    <section id="home" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
-      {/* Background video — lighter overlay so the football action stays visible */}
-      <div className="absolute inset-0 -z-10 bg-black">
-        <HeroVideo />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/15 to-transparent" />
-        <FieldGraphics />
-      </div>
+    <section id="home" className="relative isolate overflow-hidden bg-gradient-to-br from-[#eef5ff] via-white to-[#fff6d6]" aria-labelledby="hero-title">
+      <FieldGraphics />
+      <div className="pointer-events-none absolute -left-24 top-24 -z-10 h-80 w-80 rounded-full bg-accent-600/15 blur-3xl" aria-hidden="true" />
 
-      {/* Compact headline */}
-      <div className="container-x flex flex-1 flex-col justify-center pb-8 pt-28 text-white sm:pt-32">
-        <div className="max-w-xl">
-          <span className="hero-in inline-flex items-center gap-2 rounded-full border border-accent/40 bg-black/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur" style={{ animationDelay: '0.1s' }}>
+      <div className="container-x grid items-center gap-12 pb-16 pt-28 sm:pt-32 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:pb-20">
+        <div>
+          <span className="hero-in inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-accent shadow-md shadow-accent/10" style={{ animationDelay: '0.1s' }}>
             <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
@@ -161,35 +129,43 @@ export default function Hero() {
             {t('Football Academy in Samastipur', 'समस्तीपुर की फुटबॉल अकादमी')}
           </span>
 
-          {/* Headline lines rise in one after another */}
-          <h1 id="hero-title" className="mt-4 text-4xl font-extrabold uppercase leading-[0.95] drop-shadow-lg sm:text-5xl lg:text-6xl">
+          <h1 id="hero-title" className="mt-5 text-5xl font-extrabold uppercase leading-[0.92] text-ink sm:text-6xl lg:text-7xl">
             <span className="hero-in inline-block" style={{ animationDelay: '0.25s' }}>{t('Learn.', 'सीखो।')}</span>{' '}
             <span className="hero-in inline-block" style={{ animationDelay: '0.4s' }}>{t('Play.', 'खेलो।')}</span>
             <br />
-            <span className="hero-in inline-block" style={{ animationDelay: '0.55s' }}>
-              <span className="text-shimmer bg-gradient-to-r from-accent via-[#fff3b0] to-accent bg-clip-text text-transparent">{t('Grow', 'आगे बढ़ो')}</span>
+            <span className="hero-in relative inline-block" style={{ animationDelay: '0.55s' }}>
+              <span className="text-shimmer bg-gradient-to-r from-accent via-accent-600 to-accent bg-clip-text text-transparent">{t('Grow', 'आगे बढ़ो')}</span>
+              <svg className="absolute -bottom-2 left-0 h-3 w-full text-sun" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7 Q 50 1 98 6" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" /></svg>
             </span>{' '}
             <span className="hero-in inline-block" style={{ animationDelay: '0.7s' }}>{t('with Football.', 'फुटबॉल के साथ।')}</span>
           </h1>
 
-          <p className="hero-in mt-3 max-w-md text-sm leading-relaxed text-white/85 drop-shadow sm:text-base" style={{ animationDelay: '0.9s' }}>
+          <p className="hero-in mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg" style={{ animationDelay: '0.9s' }}>
             {t('Professional football coaching for young players in Samastipur. Build skills, fitness, confidence, and teamwork.', 'समस्तीपुर में युवा खिलाड़ियों के लिए प्रोफेशनल फुटबॉल कोचिंग। स्किल, फिटनेस, आत्मविश्वास और टीमवर्क बनाइए।')}
           </p>
-        </div>
-      </div>
 
-      {/* Action bar: admissions heading + timings, with the three buttons */}
-      <div className="container-x relative pb-5 sm:pb-7">
-        <div className="hero-in flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-4 text-white shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5 lg:flex-row lg:items-center lg:justify-between" style={{ animationDelay: '1.1s' }}>
-          <div className="min-w-0">
+          <div className="hero-in mt-7 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-3" style={{ animationDelay: '1s' }}>
+            <a href={whatsappLink()} {...externalLink} className="btn-primary shine-loop !px-3 sm:!px-7 sm:text-base">
+              {t('Join Now', 'अभी जुड़ें')} <ArrowRight className="hidden h-4 w-4 sm:block" />
+            </a>
+            <a href={site.phoneHref} className="btn-outline bg-white !px-3 sm:!px-6 sm:text-base">
+              <Phone className="h-4 w-4 shrink-0 max-[380px]:hidden" /> {t('Call Us', 'कॉल करें')}
+            </a>
+            <a href={whatsappLink()} {...externalLink} className="btn-whatsapp !px-3 sm:!px-6 sm:text-base">
+              <WhatsAppIcon className="h-4 w-4 shrink-0 max-[380px]:hidden" /> WhatsApp
+            </a>
+          </div>
+
+          {/* Admissions card */}
+          <div className="hero-in mt-6 max-w-lg rounded-2xl border border-line bg-white/90 p-4 shadow-lg shadow-accent/10 backdrop-blur" style={{ animationDelay: '1.1s' }}>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <p className="font-display text-lg font-extrabold uppercase tracking-wide text-accent sm:text-xl">{t('Admissions Open', 'एडमिशन जारी है')}</p>
+              <p className="font-display text-lg font-extrabold uppercase tracking-wide text-sun-600">{t('Admissions Open', 'एडमिशन जारी है')}</p>
               <OpenNowBadge />
             </div>
-            <div className="mt-1 flex flex-col gap-1 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-x-5">
+            <div className="mt-2 flex flex-col gap-1 text-sm text-muted sm:flex-row sm:flex-wrap sm:gap-x-5">
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                <span><strong className="font-semibold text-white">{t('6:00 AM – 9:00 PM', 'सुबह 6 – रात 9 बजे')}</strong> · {t('all days', 'हर दिन')}</span>
+                <span><strong className="font-semibold text-ink">{t('6:00 AM – 9:00 PM', 'सुबह 6 – रात 9 बजे')}</strong> · {t('all days', 'हर दिन')}</span>
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
@@ -197,26 +173,16 @@ export default function Hero() {
               </span>
             </div>
           </div>
-
-          <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
-            <a href={whatsappLink()} {...externalLink} className="btn-primary shine-loop !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
-              {t('Join Now', 'अभी जुड़ें')} <ArrowRight className="hidden h-4 w-4 sm:block" />
-            </a>
-            <a href={site.phoneHref} className="btn-outline !min-h-11 !gap-1.5 !border-white/70 !px-2 whitespace-nowrap text-[13px] !text-white hover:!bg-white hover:!text-[#0b0b0f] sm:!px-6 sm:text-sm">
-              <Phone className="h-4 w-4 shrink-0 max-[380px]:hidden" /> {t('Call Us', 'कॉल करें')}
-            </a>
-            <a href={whatsappLink()} {...externalLink} className="btn-whatsapp !min-h-11 !gap-1.5 !px-2 whitespace-nowrap text-[13px] sm:!px-6 sm:text-sm">
-              <WhatsAppIcon className="h-4 w-4 shrink-0 max-[380px]:hidden" /> <span className="sm:hidden">WhatsApp</span><span className="hidden sm:inline">{t('WhatsApp Us', 'व्हाट्सऐप करें')}</span>
-            </a>
-          </div>
         </div>
+
+        <PhotoCollage />
       </div>
 
-      {/* Trust strip — endless scrolling ticker (list repeated twice for a seamless loop) */}
-      <div className="ticker relative overflow-hidden border-y border-line bg-pitch-950/70 backdrop-blur-md" aria-label={trustList.join(', ')}>
+      {/* Trust strip — sunny yellow ticker (list repeated twice for a seamless loop) */}
+      <div className="ticker relative overflow-hidden bg-gradient-to-r from-sun to-[#ffd84d]" aria-label={trustList.join(', ')}>
         <div className="ticker-track flex w-max" aria-hidden="true">
           {[0, 1].map((copy) => (
-            <ul key={copy} className="flex shrink-0 items-center py-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted sm:text-sm">
+            <ul key={copy} className="flex shrink-0 items-center py-3.5 text-xs font-bold uppercase tracking-[0.16em] text-ink sm:text-sm">
               {[...trustList, ...trustList].map((item, i) => (
                 <li key={`${copy}-${i}`} className="flex items-center whitespace-nowrap">
                   <span className="px-6 sm:px-10">{item}</span>
@@ -227,7 +193,6 @@ export default function Hero() {
           ))}
         </div>
       </div>
-
     </section>
   )
 }

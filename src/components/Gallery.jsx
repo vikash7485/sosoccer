@@ -30,9 +30,9 @@ export default function Gallery() {
                 sizes="(min-width:1280px) 25vw, (min-width:1024px) 33vw, 50vw"
                 className={`${aspect[img.shape]} w-full transition duration-700 ease-out group-hover:scale-110`}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent opacity-70 transition group-hover:opacity-100" />
-              <figcaption className="pointer-events-none absolute bottom-0 left-0 p-4 text-white">
-                <span className="font-display text-lg font-bold uppercase tracking-wide sm:text-xl">{f(img, 'caption')}</span>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-accent/35 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
+              <figcaption className="pointer-events-none absolute bottom-2 left-2 rounded-lg bg-white/95 px-2 py-1 text-ink shadow-lg sm:bottom-3 sm:left-3 sm:rounded-xl sm:px-3 sm:py-1.5">
+                <span className="font-display text-[11px] font-bold uppercase leading-tight tracking-wide sm:text-lg">{f(img, 'caption')}</span>
                 <span className="mt-1 block h-0.5 w-0 bg-accent transition-all duration-500 group-hover:w-10" aria-hidden="true" />
               </figcaption>
             </Reveal>

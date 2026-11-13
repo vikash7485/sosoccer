@@ -102,7 +102,7 @@ export default function InstallApp() {
     <div
       role="dialog"
       aria-labelledby="install-title"
-      className="install-slide fixed bottom-4 left-4 right-24 z-40 max-w-sm rounded-2xl border border-line bg-pitch-800/95 p-4 shadow-2xl shadow-black/50 backdrop-blur-md sm:bottom-7 sm:left-7 sm:right-auto sm:p-5"
+      className="install-slide fixed bottom-4 left-4 right-24 z-40 max-w-sm rounded-2xl border border-line bg-white/95 p-4 shadow-2xl shadow-accent/20 backdrop-blur-md sm:bottom-7 sm:left-7 sm:right-auto sm:p-5"
     >
       <button type="button" onClick={dismiss} className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full text-muted transition hover:bg-pitch-600 hover:text-ink" aria-label={t('Close', 'बंद करें')}>
         <X className="h-4 w-4" />

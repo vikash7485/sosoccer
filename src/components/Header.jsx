@@ -26,7 +26,7 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'border-b border-line bg-pitch-950/85 py-2 shadow-lg shadow-black/40 backdrop-blur-xl' : 'py-4'
+        scrolled ? 'border-b border-line bg-white/90 py-2 shadow-lg shadow-accent/10 backdrop-blur-xl' : 'bg-white/60 py-3 backdrop-blur-md'
       }`}
     >
       <div className="container-x flex items-center justify-between gap-2 sm:gap-4">
@@ -50,7 +50,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-line bg-pitch-600 xl:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white text-ink xl:hidden"
             aria-label={t('Open menu', 'मेनू खोलें')}
             aria-expanded={open}
             aria-controls="mobile-nav"
@@ -62,13 +62,13 @@ export default function Header() {
 
       {/* Mobile slide-in nav */}
       <div
-        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`fixed inset-0 z-50 bg-[#0b1a3a]/25 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
       <aside
         id="mobile-nav"
-        className={`fixed inset-y-0 right-0 z-50 flex h-dvh w-[86%] max-w-sm flex-col bg-pitch-900 shadow-2xl transition-transform duration-300 ease-out xl:hidden ${
+        className={`fixed inset-y-0 right-0 z-50 flex h-dvh w-[86%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out xl:hidden ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Mobile navigation"

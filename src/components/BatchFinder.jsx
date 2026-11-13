@@ -96,7 +96,7 @@ export default function BatchFinder() {
         />
 
         <Reveal variant="zoom" className="mx-auto mt-12 max-w-3xl">
-          <div className="overflow-hidden rounded-[2rem] border border-line bg-pitch-800 shadow-2xl shadow-black/30">
+          <div className="overflow-hidden rounded-[2rem] border border-line bg-pitch-800 shadow-2xl shadow-accent/15">
             {/* Progress */}
             <div className="flex items-center gap-3 border-b border-line px-6 py-4 sm:px-8">
               <span className="text-xs font-bold uppercase tracking-[0.16em] text-accent">

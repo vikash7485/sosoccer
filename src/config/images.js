@@ -38,5 +38,12 @@ export const galleryImages = [
   { file: 'fb-gal-floodlit', caption: 'Floodlit Training', captionHi: 'फ्लडलाइट में ट्रेनिंग', alt: 'Evening training session under floodlights at the academy ground', shape: 'square' },
   { file: 'fb-gal-match', caption: 'Junior Match', captionHi: 'जूनियर मैच', alt: 'Young School of Soccer players during a match', shape: 'tall' },
   { file: 'fb-gal-drill', caption: 'Warm-up Drill', captionHi: 'वार्म-अप ड्रिल', alt: 'Players in bibs doing a warm-up stretch together', shape: 'square' },
+  // Added 14 Nov 2026 — from facebook.com/sosranjan and the academy's Google Maps listing
+  { file: 'fb-coach-drill', caption: 'Agility Training', captionHi: 'फुर्ती की ट्रेनिंग', alt: 'Coach demonstrating a ring footwork drill to a group of players', shape: 'wide' },
+  { file: 'g-trophies', caption: 'Tournament Trophies', captionHi: 'टूर्नामेंट ट्रॉफियाँ', alt: 'Trophies on display with organisers and players at a School of Soccer tournament', shape: 'wide' },
+  { file: 'g-teamwork', caption: 'Teamwork', captionHi: 'टीमवर्क', alt: 'Young players carrying chairs together across the ground after training', shape: 'wide' },
+  { file: 'fb-girls-trophy', caption: 'Champions', captionHi: 'चैंपियन', alt: 'S.O.S girls team smiling with a trophy', shape: 'wide' },
+  { file: 'g-two-teams', caption: 'Match Line-up', captionHi: 'मैच लाइन-अप', alt: 'Two teams lined up across the ground before kick-off', shape: 'wide' },
+  { file: 'g-event', caption: 'Tournament Day', captionHi: 'टूर्नामेंट का दिन', alt: 'School of Soccer prize table with trophies and medals at a tournament', shape: 'tall' },
 ]
 
